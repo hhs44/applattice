@@ -1,0 +1,76 @@
+flowchart LR
+  subgraph Sources["业务来源与外部依赖"]
+    Existing["存量端到端业务\n持续维护 / 渐进适配"]
+    NewFlow["新增贯通业务流\n实现 / 验证 / 注册 / 发布"]
+    Enterprise["企业系统\n缺陷 / 项目 / 售后 / SSO"]
+    TestEnv["测试环境\nHIL / SIL / MIL / 仿真 / 实车"]
+    Sensors["传感器与总线\nCamera / LiDAR / Radar / CAN / ETH"]
+  end
+
+  subgraph Platform["智能测试平台"]
+    subgraph Experience["体验面"]
+      Portal["统一门户与角色工作台"]
+      Copilot["AI Copilot"]
+      OpenAPI["开放 API"]
+    end
+
+    subgraph Access["接入与治理"]
+      Gateway["API Gateway / BFF"]
+      IAM["IAM / RBAC / 审计"]
+      Registry["业务流注册与发布门禁"]
+      Contract["API / Event / Schema Registry"]
+    end
+
+    subgraph Control["业务控制面"]
+      Adapter["集成适配中心\nPorts & Adapters"]
+      Workflow["业务流程编排\nTemporal / Camunda / Flowable"]
+      Domain["领域能力中心\n需求 / 场景 / 执行 / 评估 / 缺陷 / 报告"]
+      AI["AI Agent 编排\nLangGraph / RAG / 模型网关"]
+    end
+
+    subgraph Execution["执行面"]
+      Scheduler["执行调度与资源管理"]
+      Workers["执行 Worker 与连接器"]
+    end
+
+    subgraph Data["数据面"]
+      Bus["事件总线与工作队列"]
+      Ingest["流式接入 / 时间同步 / 解析"]
+      Factory["数据工厂\n标注 / 特征 / 质量"]
+      Assets["测试资产与数据目录"]
+      Stores["关系 / 时序 / 对象 / 向量存储"]
+    end
+
+    Governance["横切治理\n可观测性 / 安全合规 / 数据治理 / CI/CD"]
+  end
+
+  Existing --> Adapter
+  Enterprise --> Adapter
+  NewFlow --> Registry
+  Portal --> Gateway
+  Copilot --> Gateway
+  OpenAPI --> Gateway
+  Gateway --> Workflow
+  Gateway --> Domain
+  IAM -.-> Gateway
+  Registry --> Workflow
+  Contract -.-> Adapter
+  Contract -.-> Bus
+  Adapter <--> Workflow
+  Workflow <--> Domain
+  Workflow --> AI
+  AI --> Domain
+  Workflow --> Scheduler
+  Scheduler --> Workers
+  Workers --> TestEnv
+  Workers --> Bus
+  Sensors --> Ingest
+  TestEnv --> Ingest
+  Ingest --> Factory
+  Factory --> Assets
+  Assets --> Stores
+  Bus --> Domain
+  Governance -.-> Gateway
+  Governance -.-> Workflow
+  Governance -.-> Workers
+  Governance -.-> Ingest

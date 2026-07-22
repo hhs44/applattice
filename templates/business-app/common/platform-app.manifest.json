@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "__APP_ID__",
+  "title": "__APP_TITLE__",
+  "description": "__APP_DESCRIPTION__",
+  "owner": "__APP_OWNER__",
+  "route": "__APP_ROUTE__",
+  "navMark": "__APP_NAV_MARK__",
+  "requiredPermission": "__APP_ID__:read",
+  "frontend": {
+    "version": "1.0.0",
+    "port": "__WEB_PORT_NUMBER__",
+    "remoteName": "__REMOTE_NAME__",
+    "module": "./App",
+    "bridgeVersion": "1.0.0",
+    "manifestPath": "/mf-manifest.json",
+    "dockerfile": "frontend/Dockerfile",
+    "image": "business/__APP_ID__-web:1.0.0"
+  },
+  "backend": {
+    "runtime": "__BACKEND_RUNTIME__",
+    "manifest": "backend/service.manifest.json"
+  },
+  "permissions": [
+    { "methods": ["GET", "HEAD"], "pathPrefix": "/records", "permission": "__APP_ID__:read" },
+    {
+      "methods": ["POST", "PATCH", "PUT", "DELETE"],
+      "pathPrefix": "/records",
+      "permission": "__APP_ID__:write"
+    }
+  ]
+}

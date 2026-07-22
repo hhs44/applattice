@@ -1,0 +1,5 @@
+# 复制为仓库根目录 .npmrc，替换为企业 Nexus / Artifactory / Verdaccio 地址。
+registry=http://npm.intra.example.com/repository/npm-group/
+
+# 如果内网 CA 已正确下发，不要关闭 strict-ssl。
+# cafile=C:/company-ca/ca.pem

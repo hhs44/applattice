@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "todo-list-service",
+  "title": "Todo List 服务",
+  "owner": "platform-demo-team",
+  "runtime": "python",
+  "port": 4200,
+  "repository": "local://service-workspaces/todo-list-service",
+  "apiBasePath": "/api/v1",
+  "healthPath": "/health/ready",
+  "contract": {
+    "name": "todo-list-service-api",
+    "version": "1.0.0",
+    "path": "contracts/openapi.json"
+  },
+  "deployment": {
+    "image": "registry.intra.example.com/testing/todo-list-service:1.0.0",
+    "environment": {
+      "SERVICE_PORT": "4200",
+      "TODO_DATABASE_PATH": "/data/todos.db"
+    },
+    "healthcheckCommand": [
+      "CMD",
+      "python",
+      "-c",
+      "import urllib.request; urllib.request.urlopen('http://127.0.0.1:4200/health/ready')"
+    ]
+  }
+}

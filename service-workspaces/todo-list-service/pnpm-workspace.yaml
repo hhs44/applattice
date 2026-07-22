@@ -1,0 +1,8 @@
+packages:
+  - frontend
+
+allowBuilds:
+  esbuild: true
+
+strictPeerDependencies: true
+autoInstallPeers: false

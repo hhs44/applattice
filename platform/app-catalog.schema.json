@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://testing.intra.example.com/schemas/app-catalog.schema.json",
+  "title": "Testing platform application catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "apps"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "apps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "description",
+          "owner",
+          "route",
+          "navMark",
+          "requiredPermission",
+          "frontend",
+          "backend",
+          "permissions",
+          "deployment",
+          "development"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "title": { "type": "string", "minLength": 1 },
+          "description": { "type": "string", "minLength": 1 },
+          "owner": { "type": "string", "minLength": 1 },
+          "route": { "type": "string", "pattern": "^/[a-z0-9/-]*$" },
+          "navMark": { "type": "string", "minLength": 1, "maxLength": 4 },
+          "requiredPermission": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*:[a-z][a-z0-9-]*$"
+          },
+          "frontend": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "version",
+              "remoteName",
+              "module",
+              "bridgeVersion",
+              "manifestPath",
+              "developmentUrl",
+              "containerUrl",
+              "requestTimeoutMs"
+            ],
+            "properties": {
+              "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+              "remoteName": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+              "module": { "const": "./App" },
+              "bridgeVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+              "manifestPath": { "type": "string", "pattern": "^/" },
+              "developmentUrl": { "type": "string", "pattern": "^https?://" },
+              "containerUrl": { "type": "string", "pattern": "^https?://" },
+              "requestTimeoutMs": { "type": "integer", "minimum": 100 }
+            }
+          },
+          "backend": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["serviceId", "basePath"],
+            "properties": {
+              "serviceId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+              "basePath": { "type": "string", "pattern": "^/" }
+            }
+          },
+          "permissions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["methods", "pathPrefix", "permission"],
+              "properties": {
+                "methods": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": { "enum": ["GET", "HEAD", "POST", "PATCH", "PUT", "DELETE"] }
+                },
+                "pathPrefix": { "type": "string", "pattern": "^/" },
+                "permission": { "type": "string", "pattern": "^[a-z][a-z0-9-]*:[a-z][a-z0-9-]*$" }
+              }
+            }
+          },
+          "deployment": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["imageEnv", "image", "containerPort", "dockerfile"],
+            "properties": {
+              "imageEnv": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
+              "image": { "type": "string", "minLength": 1 },
+              "containerPort": { "type": "integer", "minimum": 1, "maximum": 65535 },
+              "dockerfile": { "type": "string", "minLength": 1 }
+            }
+          },
+          "development": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["fallbackPath"],
+            "properties": { "fallbackPath": { "type": "string", "minLength": 1 } }
+          }
+        }
+      }
+    }
+  }
+}

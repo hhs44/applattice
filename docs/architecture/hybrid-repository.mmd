@@ -1,0 +1,81 @@
+flowchart TB
+  User["内网用户 / 外部系统"]
+
+  subgraph PlatformRepo["平台仓库 platform-core"]
+    Portal["统一门户壳\n登录 · 导航 · 主题 · 降级"]
+    BFF["Gateway / BFF"]
+    Shared["UI · SDK · 平台契约"]
+    Catalog["服务目录"]
+    ContractLock["契约锁"]
+    Release["环境发布清单"]
+    Tooling["生成器 · 联调 · 离线工具"]
+    AppCatalog["应用目录 · 远程模块协议"]
+  end
+
+  subgraph ServiceRepos["独立服务仓库"]
+    NodeRepo["Node Full-stack Repo\nReact Remote · Fastify · SQLite · OpenAPI"]
+    PythonRepo["Python Full-stack Repo\nReact Remote · FastAPI · SQLite · OpenAPI"]
+    LegacyRepo["Legacy Adapter Repo\n防腐适配 · 契约 · CI"]
+  end
+
+  subgraph InternalArtifacts["内网制品平面"]
+    Git["Git 托管"]
+    Npm["npm Registry"]
+    Pypi["PyPI / Wheelhouse"]
+    Contracts["OpenAPI / Schema 制品"]
+    Images["OCI 镜像仓库"]
+    Base["基础镜像 / OS 软件源"]
+  end
+
+  subgraph Runtime["目标环境"]
+    Ingress["Nginx / Ingress"]
+    PortalRuntime["Portal Runtime"]
+    BFFRuntime["BFF Runtime"]
+    NodeWeb["Node 业务前端静态资源"]
+    PythonWeb["Python 业务前端静态资源"]
+    NodeRuntime["Node 服务"]
+    PythonRuntime["Python 服务"]
+    LegacyRuntime["存量系统 / Adapter"]
+    IAM["OIDC / SSO"]
+    Data["各服务自有数据库 / 对象存储"]
+    Observe["日志 · 指标 · Trace · 审计"]
+  end
+
+  User --> Ingress --> PortalRuntime --> BFFRuntime
+  BFFRuntime -->|"/modules/:appId/*"| NodeWeb
+  BFFRuntime -->|"/modules/:appId/*"| PythonWeb
+  IAM -. "令牌 / JWKS" .-> BFFRuntime
+  BFFRuntime --> NodeRuntime
+  BFFRuntime --> PythonRuntime
+  BFFRuntime --> LegacyRuntime
+  NodeRuntime --> Data
+  PythonRuntime --> Data
+  LegacyRuntime --> Data
+  Runtime -. "统一关联 ID" .-> Observe
+
+  Portal --> PortalRuntime
+  BFF --> BFFRuntime
+  NodeRepo --> NodeWeb
+  PythonRepo --> PythonWeb
+  Catalog --> BFF
+  AppCatalog --> Portal
+  AppCatalog --> BFF
+  ContractLock --> BFF
+  Release --> Runtime
+  Tooling --> Release
+
+  NodeRepo --> Git
+  PythonRepo --> Git
+  LegacyRepo --> Git
+  NodeRepo --> Contracts
+  PythonRepo --> Contracts
+  LegacyRepo --> Contracts
+  NodeRepo --> Images
+  PythonRepo --> Images
+  LegacyRepo --> Images
+  Shared --> Npm
+  PythonRepo -. "构建依赖" .-> Pypi
+  PlatformRepo -. "构建依赖" .-> Npm
+  ServiceRepos -. "批准的基础镜像" .-> Base
+  Contracts --> ContractLock
+  Images --> Release

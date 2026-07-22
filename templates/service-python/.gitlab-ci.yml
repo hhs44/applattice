@@ -1,0 +1,21 @@
+stages: [verify, package]
+
+default:
+  image: registry.intra.example.com/base/uv-python:3.12
+  before_script:
+    - uv sync --locked
+
+verify:
+  stage: verify
+  script:
+    - uv run ruff check .
+    - uv run mypy src
+    - uv run pytest
+    - uv run python scripts/export_openapi.py
+    - git diff --exit-code contracts/openapi.json
+
+package:
+  stage: package
+  script:
+    - docker build --pull=false -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA" .
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"

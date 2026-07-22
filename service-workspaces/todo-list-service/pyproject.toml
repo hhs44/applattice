@@ -1,0 +1,42 @@
+[project]
+name = "todo-list-service"
+version = "1.0.0"
+description = "Todo List 服务"
+license = "Apache-2.0"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "fastapi>=0.116,<1.0",
+  "pydantic-settings>=2.10,<3.0",
+  "uvicorn[standard]>=0.35,<1.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.27,<2.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/service"]
+
+[dependency-groups]
+dev = [
+  "httpx2>=2.7,<3.0",
+  "mypy>=1.17,<2.0",
+  "pytest>=8.4,<9.0",
+  "ruff>=0.12,<1.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["service"]

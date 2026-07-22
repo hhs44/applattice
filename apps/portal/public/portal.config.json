@@ -1,0 +1,10 @@
+{
+  "title": "智能测试平台",
+  "subtitle": "Quality Engineering",
+  "environment": "内网开发环境",
+  "version": "0.2.0",
+  "layout": "enterprise-sidebar",
+  "defaultTheme": "light",
+  "themes": ["light", "dark", "system"],
+  "primaryColor": "#1672e5"
+}

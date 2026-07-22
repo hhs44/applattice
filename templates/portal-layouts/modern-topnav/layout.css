@@ -1,0 +1,92 @@
+.topnav-shell {
+  min-height: 100vh;
+  background: var(--surface-page);
+}
+.topnav-header {
+  height: 68px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 32px;
+  padding: 0 32px;
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border-color);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-mark,
+.avatar {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--brand-primary);
+  border-radius: 10px;
+}
+.topnav-header nav {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  gap: 6px;
+  overflow: auto;
+}
+.topnav-header nav button {
+  padding: 0 16px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+}
+.topnav-header nav button.active {
+  color: var(--brand-primary);
+  border-bottom-color: var(--brand-primary);
+}
+.topnav-account {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.topnav-account select {
+  height: 34px;
+  color: var(--text-primary);
+  background: var(--surface-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+.context-strip {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 32px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  background: color-mix(in srgb, var(--brand-primary) 7%, var(--surface-card));
+  border-bottom: 1px solid var(--border-color);
+}
+.content {
+  max-width: var(--content-max);
+  margin: auto;
+  padding: 32px var(--space-page) 50px;
+}
+@media (max-width: 760px) {
+  .topnav-header {
+    grid-template-columns: 1fr auto;
+    height: auto;
+    padding: 0 16px;
+  }
+  .topnav-header nav {
+    grid-column: 1 / -1;
+    order: 3;
+    height: 44px;
+  }
+  .brand strong {
+    display: none;
+  }
+  .content {
+    padding: 22px 16px 40px;
+  }
+}

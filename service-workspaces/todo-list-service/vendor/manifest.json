@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "name": "platform-microfrontend-bridge-1.0.0.tgz",
+      "sha256": "4f6a8cb592725cf7f08ef3c8f424396eeca683000bd1738e51dc2dc4e9f22497"
+    },
+    {
+      "name": "platform-ui-0.1.0.tgz",
+      "sha256": "366cc0ddedf030a0fbe5e2b71903fb73482f0d8160634d04779a1e988660ac8d"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+ARG NODE_IMAGE=node:22-alpine
+FROM ${NODE_IMAGE} AS build
+WORKDIR /workspace
+COPY . .
+RUN corepack enable && pnpm install --frozen-lockfile
+RUN pnpm build:packages && pnpm --filter @platform/domain-service build
+RUN pnpm --filter @platform/domain-service deploy --prod /release
+
+FROM ${NODE_IMAGE} AS runtime
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=build /release ./
+USER node
+EXPOSE 4100
+CMD ["node", "dist/server.js"]

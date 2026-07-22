@@ -1,0 +1,67 @@
+{
+  "name": "intelligent-testing-platform-template",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "description": "面向企业内网的统一门户、BFF 与 Node/Python 独立服务混合仓库开发套件",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hhs44/intelligent-testing-platform-template.git"
+  },
+  "homepage": "https://github.com/hhs44/intelligent-testing-platform-template#readme",
+  "bugs": {
+    "url": "https://github.com/hhs44/intelligent-testing-platform-template/issues"
+  },
+  "keywords": [
+    "microfrontend",
+    "module-federation",
+    "fastapi",
+    "fastify",
+    "react",
+    "intranet-platform",
+    "scaffolding"
+  ],
+  "packageManager": "pnpm@11.15.1",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=11.5.3"
+  },
+  "scripts": {
+    "predev": "pnpm build:packages",
+    "dev": "pnpm --parallel --filter @platform/portal --filter @platform/gateway --filter @platform/domain-service dev",
+    "build:packages": "pnpm --filter @platform/contracts --filter @platform/microfrontend-bridge --filter @platform/ui --filter @platform/sdk build",
+    "build": "pnpm -r build",
+    "pretypecheck": "pnpm build:packages",
+    "typecheck": "pnpm -r typecheck",
+    "pretest": "pnpm build:packages",
+    "test": "pnpm -r test && node --test tools/scaffold/*.test.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "create:module": "node scripts/create-module.mjs",
+    "create:integration": "node scripts/create-module.mjs",
+    "create:service": "node scripts/create-service-repo.mjs",
+    "create:app": "node tools/scaffold/cli.mjs app",
+    "create:portal": "node tools/scaffold/cli.mjs portal",
+    "scaffold": "node tools/scaffold/cli.mjs",
+    "register:app": "node scripts/register-app.mjs",
+    "register:service": "node scripts/register-service.mjs",
+    "offline:prepare": "node tools/scaffold/prepare-offline.mjs",
+    "hybrid:check": "node scripts/check-hybrid-workspace.mjs",
+    "hybrid:render": "node scripts/render-hybrid-config.mjs",
+    "contracts:verify": "node scripts/verify-service-catalog.mjs",
+    "contracts:lock": "node scripts/update-contract-lock.mjs",
+    "contracts:update": "node scripts/update-service-contract.mjs",
+    "release:verify": "node scripts/verify-release-manifest.mjs",
+    "smoke": "node scripts/smoke-test.mjs",
+    "smoke:todo": "node scripts/smoke-todo.mjs",
+    "verify:runtime": "node scripts/verify-runtime.mjs",
+    "local:dev": "node scripts/start-local-platform.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "prettier": "^3.9.5",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.0"
+  }
+}

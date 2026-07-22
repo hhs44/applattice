@@ -1,0 +1,84 @@
+{
+  "$schema": "./service-catalog.schema.json",
+  "schemaVersion": 1,
+  "services": [
+    {
+      "id": "domain-service",
+      "title": "测试运行领域服务",
+      "owner": "testing-platform",
+      "runtime": "node",
+      "repository": "ssh://git.intra.example.com/testing/domain-service.git",
+      "gateway": {
+        "baseUrlEnv": "DOMAIN_SERVICE_URL",
+        "developmentUrl": "http://localhost:4100",
+        "containerUrl": "http://domain-service:4100",
+        "healthPath": "/health/ready",
+        "requestTimeoutMs": 5000,
+        "required": true
+      },
+      "contract": {
+        "name": "domain-service-api",
+        "version": "1.0.0",
+        "source": "contracts/openapi/domain-service.v1.json"
+      },
+      "deployment": {
+        "imageEnv": "DOMAIN_SERVICE_IMAGE",
+        "image": "intelligent-testing/domain-service:0.1.0",
+        "containerPort": 4100,
+        "environment": {
+          "NODE_ENV": "production",
+          "DOMAIN_SERVICE_PORT": "4100"
+        },
+        "healthcheckCommand": [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:4100/health/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+        ]
+      },
+      "development": {
+        "fallbackPath": ".",
+        "dockerfile": "deployment/docker/Dockerfile.domain-service"
+      }
+    },
+    {
+      "id": "todo-list-service",
+      "title": "Todo List 服务",
+      "owner": "platform-demo-team",
+      "runtime": "python",
+      "repository": "local://service-workspaces/todo-list-service",
+      "gateway": {
+        "baseUrlEnv": "TODO_LIST_SERVICE_URL",
+        "developmentUrl": "http://localhost:4200",
+        "containerUrl": "http://todo-list-service:4200",
+        "healthPath": "/health/ready",
+        "requestTimeoutMs": 5000,
+        "required": true
+      },
+      "contract": {
+        "name": "todo-list-service-api",
+        "version": "1.0.0",
+        "source": "contracts/openapi/todo-list-service.v1.json"
+      },
+      "deployment": {
+        "imageEnv": "TODO_LIST_SERVICE_IMAGE",
+        "image": "registry.intra.example.com/testing/todo-list-service:1.0.0",
+        "containerPort": 4200,
+        "environment": {
+          "SERVICE_PORT": "4200",
+          "TODO_DATABASE_PATH": "/data/todos.db"
+        },
+        "healthcheckCommand": [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:4200/health/ready')"
+        ]
+      },
+      "development": {
+        "fallbackPath": "service-workspaces/todo-list-service",
+        "dockerfile": "Dockerfile"
+      }
+    }
+  ]
+}

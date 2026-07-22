@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "todo-list",
+  "title": "Todo 清单",
+  "description": "Python FastAPI 全栈模板验证",
+  "owner": "platform-demo-team",
+  "route": "/todos",
+  "navMark": "待",
+  "requiredPermission": "todos:read",
+  "frontend": {
+    "version": "1.0.0",
+    "port": 4300,
+    "remoteName": "todo_list_app",
+    "module": "./App",
+    "bridgeVersion": "1.0.0",
+    "manifestPath": "/mf-manifest.json",
+    "dockerfile": "frontend/Dockerfile",
+    "image": "intelligent-testing/todo-list-web:1.0.0"
+  },
+  "backend": {
+    "runtime": "python",
+    "manifest": "service.manifest.json"
+  },
+  "permissions": [
+    { "methods": ["GET", "HEAD"], "pathPrefix": "/todos", "permission": "todos:read" },
+    { "methods": ["POST", "PATCH", "PUT", "DELETE"], "pathPrefix": "/todos", "permission": "todos:write" }
+  ]
+}

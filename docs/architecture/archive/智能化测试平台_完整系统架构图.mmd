@@ -1,0 +1,192 @@
+flowchart TB
+  subgraph EXT["使用者与外部生态"]
+    direction LR
+    USER(["测试工程师 / 研发 / 架构师 / 管理者"])
+    ALM["需求 / PLM / ALM / 缺陷系统"]
+    IDP["企业 SSO / 身份源"]
+    DEVOPS["GitLab / Jenkins / 代码仓库"]
+    MODEL["企业模型 / 私有模型 / 云端 LLM"]
+    SENSOR["车辆 / ECU / Camera / LiDAR / Radar / CAN"]
+    NOTICE["邮件 / 飞书 / 企业微信"]
+  end
+
+  subgraph ACCESS["接入与体验层"]
+    direction LR
+    PORTAL["统一门户<br/>微前端 / 角色工作台 / 管理驾驶舱"]
+    BFF["BFF / 页面聚合服务"]
+    OPENAPI["Open API / SDK / CLI"]
+    WEBHOOK["Webhook / 系统集成入口"]
+    GW["API 网关<br/>认证 / 路由 / 限流 / 灰度 / 协议转换"]
+  end
+
+  subgraph CONTROL["控制面：业务与 AI"]
+    direction LR
+    subgraph BIZ["业务服务层"]
+      direction TB
+      LEGACY["存量端到端业务"]
+      ACL["适配器 / 防腐层"]
+      NEWFLOW["新增贯通业务流"]
+      RELEASE["流程注册 / 验证 / 发布门禁"]
+      ORCH["业务流编排与集成中枢<br/>流程 / 状态 / 规则 / 超时 / 重试 / 补偿"]
+      DOMAIN["领域服务网关 / 服务目录"]
+      D1["需求 / 策略<br/>项目 / 测试计划"]
+      D2["场景 / 用例<br/>资产编目"]
+      D3["执行调度<br/>环境与资源管理"]
+      D4["结果评估<br/>覆盖率 / 风险分析"]
+      D5["缺陷闭环<br/>报告 / 安全证据"]
+      EVENT{{"事件总线<br/>Kafka / Pulsar"}}
+      TRACE["统一业务追踪 ID<br/>需求 → 场景 → 用例 → 执行 → 结果 → 缺陷 → 证据"]
+    end
+    subgraph AI["AI 智能能力层"]
+      direction TB
+      AGENT["LangGraph Agent 编排<br/>任务规划 / 多 Agent 协作"]
+      RAG["RAG / 知识增强<br/>检索 / 重排 / 引用"]
+      MCP["MCP 工具网关<br/>工具注册 / 权限 / 超时 / 审计"]
+      MODELGW["模型网关<br/>路由 / 降级 / 限额 / 成本控制"]
+      AIGOV["AI 治理与评测<br/>Prompt/模型版本 / 离线评测 / 效果门禁 / 人工审核"]
+      AISTATE[("Agent 状态与记忆<br/>Checkpoint / Memory")]
+    end
+  end
+
+  subgraph EXECUTION["执行面：测试调度与环境适配"]
+    direction LR
+    SCHED["分布式调度中心<br/>队列 / 优先级 / 并发 / 重试"]
+    WORKER["自动化执行器<br/>脚本 / 测试框架 / 插件运行时"]
+    ENVADAPTER["环境适配网关<br/>统一驱动 / 协议适配"]
+    HIL["HIL / SIL / MIL<br/>物理与虚拟台架"]
+    SIM["仿真器集群<br/>CARLA / VTD / PanoSim"]
+    CLOUD["车云 / ECU / 域控<br/>移动端 / 服务端"]
+    COLLECT["结果采集器<br/>日志 / 测量值 / 视频 / Trace"]
+  end
+
+  subgraph DATA["数据面：ADAS 与测试数据管道"]
+    direction LR
+    INGEST["高速数据接入<br/>ROS Bag / MDF4 / CAN / Ethernet"]
+    SYNC["时间同步与解析<br/>PTP / gPTP / DBC / ARXML"]
+    QUALITY["数据质量检测<br/>丢帧 / 丢包 / 漂移 / 完整性"]
+    LABEL["数据标注<br/>自动标注 / 人工复核 / 质量抽检"]
+    FEATURE["特征工程<br/>融合特征 / 数据切片 / 数据版本"]
+    MINING["场景与 Corner Case 挖掘<br/>聚类 / 异常检测 / 长尾发现"]
+  end
+
+  subgraph ASSET["测试资产与知识中心"]
+    direction LR
+    CATALOG["统一资产目录<br/>版本 / 权限 / 审批 / 发布"]
+    SCENE[("场景库<br/>OpenSCENARIO / ODD / 安全规则")]
+    SIGNAL[("信号与接口字典<br/>DBC / ARXML / SOME-IP")]
+    DATASET[("测试数据集<br/>真实 / 仿真 / 合成数据")]
+    KNOWLEDGE[("知识图谱<br/>需求-用例-信号-ECU-缺陷")]
+    EVIDENCE[("证据库<br/>报告 / 审批 / 审计 / 安全案例")]
+  end
+
+  subgraph STORAGE["数据湖与存储层"]
+    direction LR
+    RDB[("关系数据库<br/>PostgreSQL / MySQL")]
+    LAKE[("对象存储与数据湖<br/>S3 / MinIO / Iceberg")]
+    TSDB[("时序数据库<br/>TDengine / InfluxDB")]
+    VECTOR[("检索与向量存储<br/>OpenSearch / Milvus / pgvector")]
+    GRAPH[("图数据库<br/>Neo4j / NebulaGraph")]
+    CACHE[("缓存与状态<br/>Redis")]
+  end
+
+  subgraph GOVERNANCE["横切治理与运行保障"]
+    direction LR
+    SECURITY["安全与合规<br/>RBAC/ABAC / mTLS / KMS / Secret<br/>数据分级脱敏 / ISO 26262 / SOTIF"]
+    OBS["可观测性<br/>Metrics / Logs / Traces / SLO<br/>AI Token与轨迹 / 数据质量 / 告警"]
+    DATAGOV["契约与数据治理<br/>OpenAPI / AsyncAPI / Schema Registry<br/>元数据 / 血缘 / 质量 / 生命周期"]
+    DELIVERY["工程效能<br/>CI/CD / 自动化测试 / Sonar / SBOM<br/>镜像仓库 / GitOps / 灰度 / 回滚"]
+    INFRA["基础设施<br/>Kubernetes / Service Mesh / GPU<br/>计算存储网络 / 多环境 / 备份容灾"]
+  end
+
+  USER --> PORTAL --> BFF --> GW
+  USER --> OPENAPI --> GW
+  ALM <--> WEBHOOK
+  WEBHOOK --> GW
+  GW --> ORCH
+  GW --> DOMAIN
+  GW --> AGENT
+  LEGACY --> ACL --> ORCH
+  NEWFLOW --> RELEASE --> ORCH
+  ORCH <--> DOMAIN
+  ORCH <--> EVENT
+  DOMAIN <--> EVENT
+  DOMAIN --> D1
+  DOMAIN --> D2
+  DOMAIN --> D3
+  DOMAIN --> D4
+  DOMAIN --> D5
+  TRACE --- ORCH
+  TRACE --- DOMAIN
+  ALM <--> D1
+  ALM <--> D5
+  ORCH <--> AGENT
+  AGENT --> RAG
+  AGENT --> MCP
+  AGENT --> MODELGW
+  AGENT --> AIGOV
+  AISTATE <--> AGENT
+  MCP --> DOMAIN
+  MCP --> SCHED
+  MODELGW <--> MODEL
+  AIGOV -->|审核任务| USER
+  D3 --> SCHED
+  EVENT --> SCHED
+  SCHED --> WORKER --> ENVADAPTER
+  ENVADAPTER --> HIL
+  ENVADAPTER --> SIM
+  ENVADAPTER --> CLOUD
+  HIL --> COLLECT
+  SIM --> COLLECT
+  CLOUD --> COLLECT
+  COLLECT -->|状态与结果事件| EVENT
+  SENSOR -->|大数据直达，不经过业务 API| INGEST
+  COLLECT -->|日志 / 测量值 / 媒体数据| INGEST
+  INGEST --> SYNC --> QUALITY
+  QUALITY --> LABEL --> FEATURE --> MINING
+  CATALOG --> SCENE
+  CATALOG --> SIGNAL
+  CATALOG --> DATASET
+  CATALOG --> KNOWLEDGE
+  CATALOG --> EVIDENCE
+  DOMAIN <--> CATALOG
+  MINING --> SCENE
+  MINING --> KNOWLEDGE
+  SYNC --> SIGNAL
+  LABEL --> DATASET
+  D5 --> EVIDENCE
+  TRACE --> EVIDENCE
+  RAG <--> KNOWLEDGE
+  RAG <--> SCENE
+  ORCH --> RDB
+  DOMAIN --> RDB
+  AISTATE --> RDB
+  AISTATE --> CACHE
+  INGEST --> LAKE
+  SYNC --> TSDB
+  FEATURE --> LAKE
+  FEATURE --> VECTOR
+  RAG <--> VECTOR
+  KNOWLEDGE --> GRAPH
+  CATALOG --> RDB
+  IDP --> SECURITY
+  DEVOPS --> DELIVERY
+  OBS --> NOTICE
+  DELIVERY --> INFRA
+  SECURITY -.-> GW
+  SECURITY -.-> ORCH
+  SECURITY -.-> AGENT
+  SECURITY -.-> INGEST
+  SECURITY -.-> RDB
+  OBS -.-> GW
+  OBS -.-> ORCH
+  OBS -.-> AGENT
+  OBS -.-> SCHED
+  OBS -.-> QUALITY
+  DATAGOV -.-> EVENT
+  DATAGOV -.-> INGEST
+  DATAGOV -.-> CATALOG
+  DATAGOV -.-> LAKE
+  INFRA -.-> GW
+  INFRA -.-> ORCH
+  INFRA -.-> SCHED
+  INFRA -.-> INGEST

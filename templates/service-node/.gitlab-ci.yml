@@ -1,0 +1,18 @@
+stages: [verify, package]
+
+default:
+  image: registry.intra.example.com/base/node:22-alpine
+  before_script:
+    - corepack enable
+    - pnpm install --frozen-lockfile --prefer-offline --store-dir .pnpm-store
+
+verify:
+  stage: verify
+  script:
+    - pnpm verify
+
+package:
+  stage: package
+  script:
+    - docker build --pull=false -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA" .
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"

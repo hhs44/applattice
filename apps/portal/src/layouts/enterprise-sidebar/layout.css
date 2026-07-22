@@ -1,0 +1,219 @@
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 252px 1fr;
+  background: var(--surface-page);
+}
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-on-nav);
+  background: linear-gradient(
+    170deg,
+    var(--surface-nav-strong),
+    var(--surface-nav) 60%,
+    color-mix(in srgb, var(--brand-primary) 25%, var(--surface-nav))
+  );
+  box-shadow: 8px 0 30px rgb(4 20 37 / 11%);
+}
+.brand {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 23px;
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+}
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 800;
+  border-radius: 10px;
+  background: var(--brand-primary);
+  box-shadow: 0 7px 18px color-mix(in srgb, var(--brand-primary) 35%, transparent);
+}
+.brand strong,
+.brand span {
+  display: block;
+}
+.brand strong {
+  font-size: 15px;
+}
+.brand span {
+  margin-top: 3px;
+  color: #8098ae;
+  font-size: 9px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.sidebar nav {
+  flex: 1;
+  padding: 25px 13px;
+}
+.nav-section {
+  display: block;
+  padding: 0 12px 10px;
+  color: #688197;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+.sidebar nav button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 3px 0;
+  padding: 11px 12px;
+  color: #b8c8d7;
+  text-align: left;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  transition: 0.18s ease;
+}
+.sidebar nav button:hover,
+.sidebar nav button.active {
+  color: #fff;
+  background: rgb(255 255 255 / 8%);
+}
+.sidebar nav button.active {
+  box-shadow: inset 3px 0 var(--brand-primary);
+}
+.sidebar nav button strong,
+.sidebar nav button small {
+  display: block;
+}
+.sidebar nav button strong {
+  font-size: 13px;
+}
+.sidebar nav button small {
+  margin-top: 3px;
+  color: #8297aa;
+  font-size: 10px;
+}
+.nav-mark {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 4%);
+}
+.sidebar-footer {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 18px;
+  border-top: 1px solid rgb(255 255 255 / 8%);
+  background: rgb(0 0 0 / 9%);
+}
+.sidebar-footer .avatar {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--brand-primary);
+}
+.sidebar-footer div {
+  min-width: 0;
+  flex: 1;
+}
+.sidebar-footer strong,
+.sidebar-footer small {
+  display: block;
+  font-size: 11px;
+}
+.sidebar-footer small {
+  margin-top: 3px;
+  color: #7f98ae;
+  font-size: 10px;
+}
+.workspace {
+  min-width: 0;
+}
+.topbar {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  color: var(--text-secondary);
+  background: color-mix(in srgb, var(--surface-card) 92%, transparent);
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+}
+.environment {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.environment > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #28b879;
+  box-shadow: 0 0 0 4px #28b87922;
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 11px;
+}
+.topbar-actions select {
+  height: 32px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--surface-card);
+}
+.topbar-separator {
+  width: 1px;
+  height: 18px;
+  background: var(--border-color);
+}
+.content {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 31px var(--space-page) 50px;
+}
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 82px 1fr;
+  }
+  .brand > div:last-child,
+  .nav-section,
+  .sidebar nav button > span:last-child,
+  .sidebar-footer div {
+    display: none;
+  }
+  .brand,
+  .sidebar nav button,
+  .sidebar-footer {
+    justify-content: center;
+  }
+  .content {
+    padding: 24px 18px 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}

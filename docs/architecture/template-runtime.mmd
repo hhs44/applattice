@@ -1,0 +1,21 @@
+flowchart LR
+  Browser["浏览器"] --> Portal["统一门户\nReact / Nginx"]
+  Portal --> Gateway["Gateway / BFF\nFastify / OIDC / RBAC"]
+
+  Catalog["服务目录"] -. "服务 ID → URL / 健康 / 超时" .-> Gateway
+  Lock["OpenAPI 契约锁"] -. "版本 + SHA-256" .-> Gateway
+  IAM["企业 OIDC / SSO"] -. "JWT / JWKS" .-> Gateway
+
+  Gateway --> Node["独立 Node 服务"]
+  Gateway --> Python["独立 Python 服务"]
+  Gateway --> Legacy["存量系统适配器"]
+
+  Node --> NodeData["Node 服务自有数据"]
+  Python --> PythonData["Python 服务自有数据"]
+  Legacy --> LegacyData["存量数据"]
+
+  Trace["日志 · 指标 · Trace · 审计"]
+  Gateway -. "correlation_id" .-> Trace
+  Node -.-> Trace
+  Python -.-> Trace
+  Legacy -.-> Trace

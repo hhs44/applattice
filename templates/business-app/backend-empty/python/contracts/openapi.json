@@ -1,0 +1,21 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "__SERVICE_TITLE__", "version": "1.0.0" },
+  "paths": {
+    "/health/ready": {
+      "get": {
+        "operationId": "ready",
+        "responses": { "200": { "description": "Ready" } }
+      }
+    },
+    "/api/v1/info": {
+      "get": {
+        "operationId": "getInfo",
+        "responses": {
+          "200": { "description": "Starter service information" },
+          "401": { "description": "Missing internal principal" }
+        }
+      }
+    }
+  }
+}

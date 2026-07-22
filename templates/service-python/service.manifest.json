@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "__SERVICE_ID__",
+  "title": "__SERVICE_TITLE__",
+  "owner": "CHANGE_ME",
+  "runtime": "python",
+  "port": "__PORT_NUMBER__",
+  "repository": "ssh://git.intra.example.com/testing/__SERVICE_ID__.git",
+  "apiBasePath": "/api/v1",
+  "healthPath": "/health/ready",
+  "contract": {
+    "name": "__SERVICE_ID__-api",
+    "version": "1.0.0",
+    "path": "contracts/openapi.json"
+  },
+  "deployment": {
+    "image": "business/__SERVICE_ID__:1.0.0",
+    "environment": {
+      "SERVICE_PORT": "__PORT__",
+      "DATABASE_PATH": "/data/records.db"
+    },
+    "healthcheckCommand": [
+      "CMD",
+      "python",
+      "-c",
+      "import urllib.request; urllib.request.urlopen('http://127.0.0.1:__PORT__/health/ready')"
+    ]
+  }
+}

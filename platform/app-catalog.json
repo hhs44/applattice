@@ -1,0 +1,50 @@
+{
+  "$schema": "./app-catalog.schema.json",
+  "schemaVersion": 1,
+  "apps": [
+    {
+      "id": "todo-list",
+      "title": "Todo 清单",
+      "description": "Python FastAPI 全栈模板验证",
+      "owner": "platform-demo-team",
+      "route": "/todos",
+      "navMark": "待",
+      "requiredPermission": "todos:read",
+      "frontend": {
+        "version": "1.0.0",
+        "remoteName": "todo_list_app",
+        "module": "./App",
+        "bridgeVersion": "1.0.0",
+        "manifestPath": "/mf-manifest.json",
+        "developmentUrl": "http://localhost:4300",
+        "containerUrl": "http://todo-list-web:4300",
+        "requestTimeoutMs": 5000
+      },
+      "backend": {
+        "serviceId": "todo-list-service",
+        "basePath": "/api/v1"
+      },
+      "permissions": [
+        {
+          "methods": ["GET", "HEAD"],
+          "pathPrefix": "/todos",
+          "permission": "todos:read"
+        },
+        {
+          "methods": ["POST", "PATCH", "PUT", "DELETE"],
+          "pathPrefix": "/todos",
+          "permission": "todos:write"
+        }
+      ],
+      "deployment": {
+        "imageEnv": "TODO_LIST_WEB_IMAGE",
+        "image": "intelligent-testing/todo-list-web:1.0.0",
+        "containerPort": 4300,
+        "dockerfile": "frontend/Dockerfile"
+      },
+      "development": {
+        "fallbackPath": "service-workspaces/todo-list-service"
+      }
+    }
+  ]
+}

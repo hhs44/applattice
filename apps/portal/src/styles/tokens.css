@@ -1,0 +1,38 @@
+:root {
+  font-family: Inter, 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --brand-primary: #1672e5;
+  --color-success: #20a76d;
+  --color-warning: #e98a33;
+  --color-danger: #df5b63;
+  --radius-sm: 8px;
+  --radius-md: 13px;
+  --shadow-card: 0 16px 40px rgb(16 40 66 / 7%);
+  --content-max: 1500px;
+  --space-page: 32px;
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@business/__APP_ID__",
+  "version": "1.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@11.15.1",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "verify": "pnpm typecheck && pnpm test && pnpm build"
+  }
+}

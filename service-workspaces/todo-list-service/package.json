@@ -1,0 +1,14 @@
+{
+  "name": "todo-list-fullstack",
+  "version": "1.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@11.15.1",
+  "scripts": {
+    "dev": "pnpm --dir frontend dev",
+    "build": "pnpm --dir frontend build",
+    "typecheck": "pnpm --dir frontend typecheck",
+    "test": "pnpm --dir frontend test",
+    "verify": "pnpm --dir frontend verify"
+  }
+}

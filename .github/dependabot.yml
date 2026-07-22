@@ -1,0 +1,25 @@
+version: 2
+updates:
+  # GitHub 的版本更新当前尚未支持 pnpm 11。pnpm-lock.yaml 仍用于
+  # Dependency Graph 和安全告警；官方支持后再增加 npm ecosystem 条目。
+  - package-ecosystem: uv
+    directory: /service-workspaces/todo-list-service
+    schedule:
+      interval: weekly
+      day: monday
+      time: '03:00'
+      timezone: Asia/Shanghai
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: 'deps(python)'
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '03:30'
+      timezone: Asia/Shanghai
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: 'ci'

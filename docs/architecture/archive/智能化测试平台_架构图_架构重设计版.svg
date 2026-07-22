@@ -1,0 +1,326 @@
+<svg viewBox="0 0 1600 1180" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">智能测试平台架构重设计版</title>
+  <desc id="desc">采用体验面、接入与治理、业务控制面、执行面、数据面和横切治理的智能测试平台架构。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset="1" stop-color="#0b1424"/>
+    </linearGradient>
+    <linearGradient id="header" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0a1830"/>
+      <stop offset="0.5" stop-color="#12264a"/>
+      <stop offset="1" stop-color="#0a1830"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-8%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#000" flood-opacity="0.22"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0 0 L9 4.5 L0 9 Z" fill="#60a5fa"/>
+    </marker>
+    <marker id="arrowCyan" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0 0 L9 4.5 L0 9 Z" fill="#22d3ee"/>
+    </marker>
+    <marker id="arrowPink" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0 0 L9 4.5 L0 9 Z" fill="#e879f9"/>
+    </marker>
+    <style>
+      text { font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif; text-rendering: geometricPrecision; }
+      .plane { fill: #0f1b2d; stroke: #274060; stroke-width: 1.2; }
+      .card { fill: #13243a; stroke: #315176; stroke-width: 1; }
+      .card-strong { fill: #123455; stroke: #38bdf8; stroke-width: 1.2; }
+      .card-ai { fill: #291c3e; stroke: #c084fc; stroke-width: 1.2; }
+      .card-data { fill: #10382f; stroke: #34d399; stroke-width: 1.1; }
+      .card-exec { fill: #372817; stroke: #f59e0b; stroke-width: 1.1; }
+      .rail { fill: #0d192a; stroke: #243b59; stroke-width: 1.2; }
+      .title { fill: #f8fafc; font-size: 30px; font-weight: 700; }
+      .subtitle { fill: #94a3b8; font-size: 14px; }
+      .plane-title { fill: #e2e8f0; font-size: 17px; font-weight: 700; }
+      .card-title { fill: #f1f5f9; font-size: 15px; font-weight: 700; }
+      .body { fill: #a8bad0; font-size: 12px; }
+      .small { fill: #8296ae; font-size: 11px; }
+      .pill { fill: #1d4ed8; }
+      .pill-text { fill: #dbeafe; font-size: 11px; font-weight: 700; }
+      .control { fill: none; stroke: #60a5fa; stroke-width: 2; marker-end: url(#arrowBlue); }
+      .event { fill: none; stroke: #22d3ee; stroke-width: 2; stroke-dasharray: 7 5; marker-end: url(#arrowCyan); }
+      .bulk { fill: none; stroke: #e879f9; stroke-width: 2.5; marker-end: url(#arrowPink); }
+      .govern { fill: none; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 3 5; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1180" fill="url(#bg)"/>
+  <rect width="1600" height="86" fill="url(#header)"/>
+  <line x1="0" y1="86" x2="1600" y2="86" stroke="#274060"/>
+  <text x="48" y="40" class="title">智能测试平台 — 架构重设计版</text>
+  <text x="48" y="66" class="subtitle">演进式业务接入 · 确定性流程与 AI 编排分离 · 控制面与数据面分离 · 契约优先</text>
+  <rect x="1446" y="23" width="116" height="36" rx="18" fill="#102a4a" stroke="#3b82f6"/>
+  <text x="1504" y="46" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="700">Architecture V2</text>
+
+  <!-- LEFT: SOURCES -->
+  <rect x="36" y="112" width="220" height="888" rx="14" class="rail" filter="url(#shadow)"/>
+  <rect x="36" y="112" width="220" height="48" rx="14" fill="#102a46"/>
+  <text x="146" y="143" text-anchor="middle" fill="#7dd3fc" font-size="17" font-weight="700">业务来源与外部依赖</text>
+
+  <rect x="54" y="178" width="184" height="108" rx="10" class="card"/>
+  <rect x="68" y="192" width="58" height="22" rx="11" fill="#164e63"/>
+  <text x="97" y="207" text-anchor="middle" fill="#67e8f9" font-size="10" font-weight="700">在运</text>
+  <text x="146" y="235" text-anchor="middle" class="card-title">存量端到端业务</text>
+  <text x="146" y="257" text-anchor="middle" class="body">持续维护 · 渐进适配</text>
+  <text x="146" y="275" text-anchor="middle" class="small">不强制整体迁移</text>
+
+  <rect x="54" y="306" width="184" height="108" rx="10" class="card-strong"/>
+  <rect x="68" y="320" width="58" height="22" rx="11" fill="#1d4ed8"/>
+  <text x="97" y="335" text-anchor="middle" fill="#dbeafe" font-size="10" font-weight="700">新增</text>
+  <text x="146" y="363" text-anchor="middle" class="card-title">贯通业务流</text>
+  <text x="146" y="385" text-anchor="middle" class="body">实现 · 验证 · 注册 · 发布</text>
+  <text x="146" y="403" text-anchor="middle" class="small">通过门禁后进入平台</text>
+
+  <rect x="54" y="434" width="184" height="92" rx="10" class="card"/>
+  <text x="146" y="465" text-anchor="middle" class="card-title">企业系统</text>
+  <text x="146" y="488" text-anchor="middle" class="body">缺陷 · 项目 · 售后 · SSO</text>
+  <text x="146" y="509" text-anchor="middle" class="small">API / 事件集成</text>
+
+  <rect x="54" y="546" width="184" height="92" rx="10" class="card-ai"/>
+  <text x="146" y="577" text-anchor="middle" class="card-title">模型与知识服务</text>
+  <text x="146" y="600" text-anchor="middle" fill="#d8b4fe" font-size="12">LLM · Embedding · Reranker</text>
+  <text x="146" y="621" text-anchor="middle" class="small">企业知识与模型平台</text>
+
+  <rect x="54" y="658" width="184" height="128" rx="10" class="card-exec"/>
+  <text x="146" y="690" text-anchor="middle" class="card-title">测试设备与环境</text>
+  <text x="146" y="714" text-anchor="middle" fill="#fcd34d" font-size="12">HIL · SIL · MIL · 仿真 · 实车</text>
+  <line x1="78" y1="730" x2="214" y2="730" stroke="#6b4b21"/>
+  <text x="146" y="754" text-anchor="middle" class="body">Camera · LiDAR · Radar</text>
+  <text x="146" y="775" text-anchor="middle" class="body">GPS-IMU · CAN · ETH</text>
+
+  <rect x="54" y="806" width="184" height="170" rx="10" fill="#0b2135" stroke="#24506f"/>
+  <text x="146" y="838" text-anchor="middle" fill="#7dd3fc" font-size="14" font-weight="700">接入原则</text>
+  <text x="72" y="869" class="body">• 契约先于系统耦合</text>
+  <text x="72" y="898" class="body">• 适配器隔离存量模型</text>
+  <text x="72" y="927" class="body">• 业务流成熟后发布</text>
+  <text x="72" y="956" class="body">• 原始数据直达数据面</text>
+
+  <!-- MAIN: EXPERIENCE -->
+  <rect x="280" y="112" width="1000" height="118" rx="14" class="plane" filter="url(#shadow)"/>
+  <rect x="298" y="100" width="112" height="27" rx="13.5" fill="#1d4ed8"/>
+  <text x="354" y="118" text-anchor="middle" class="pill-text">体验面</text>
+  <text x="318" y="149" class="plane-title">统一入口与角色化体验</text>
+  <rect x="318" y="165" width="286" height="48" rx="9" class="card-strong"/>
+  <text x="461" y="187" text-anchor="middle" class="card-title">统一门户与角色工作台</text>
+  <text x="461" y="204" text-anchor="middle" class="small">测试负责人 · 工程师 · 业务流负责人</text>
+  <rect x="622" y="165" width="286" height="48" rx="9" class="card-ai"/>
+  <text x="765" y="187" text-anchor="middle" class="card-title">AI Copilot</text>
+  <text x="765" y="204" text-anchor="middle" fill="#d8b4fe" font-size="11">分析 · 建议 · 证据 · 人工确认</text>
+  <rect x="926" y="165" width="316" height="48" rx="9" class="card"/>
+  <text x="1084" y="187" text-anchor="middle" class="card-title">开放 API / 自动化客户端</text>
+  <text x="1084" y="204" text-anchor="middle" class="small">CLI · SDK · 第三方应用</text>
+
+  <!-- MAIN: ACCESS -->
+  <rect x="280" y="248" width="1000" height="108" rx="14" class="plane" filter="url(#shadow)"/>
+  <rect x="298" y="236" width="126" height="27" rx="13.5" fill="#6d28d9"/>
+  <text x="361" y="254" text-anchor="middle" class="pill-text">接入与治理</text>
+  <rect x="310" y="278" width="224" height="58" rx="9" fill="#25184b" stroke="#8b5cf6"/>
+  <text x="422" y="301" text-anchor="middle" class="card-title">API Gateway / BFF</text>
+  <text x="422" y="322" text-anchor="middle" fill="#c4b5fd" font-size="11">认证 · 聚合 · 限流 · 版本</text>
+  <rect x="548" y="278" width="210" height="58" rx="9" class="card"/>
+  <text x="653" y="301" text-anchor="middle" class="card-title">IAM / RBAC / 审计</text>
+  <text x="653" y="322" text-anchor="middle" class="small">资源级授权 · 操作留痕</text>
+  <rect x="772" y="278" width="224" height="58" rx="9" class="card-strong"/>
+  <text x="884" y="301" text-anchor="middle" class="card-title">业务流注册与发布门禁</text>
+  <text x="884" y="322" text-anchor="middle" class="small">完整性 · 回归 · 监控 · 回滚</text>
+  <rect x="1010" y="278" width="240" height="58" rx="9" fill="#153445" stroke="#22d3ee"/>
+  <text x="1130" y="301" text-anchor="middle" class="card-title">契约与 Schema Registry</text>
+  <text x="1130" y="322" text-anchor="middle" fill="#a5f3fc" font-size="11">API · Event · Dataset</text>
+
+  <!-- MAIN: CONTROL -->
+  <rect x="280" y="374" width="1000" height="242" rx="14" class="plane" filter="url(#shadow)"/>
+  <rect x="298" y="362" width="126" height="27" rx="13.5" fill="#0891b2"/>
+  <text x="361" y="380" text-anchor="middle" class="pill-text">业务控制面</text>
+
+  <rect x="310" y="414" width="206" height="176" rx="10" class="card"/>
+  <text x="413" y="443" text-anchor="middle" class="card-title">集成适配中心</text>
+  <text x="413" y="465" text-anchor="middle" fill="#7dd3fc" font-size="11">Ports &amp; Adapters / 防腐层</text>
+  <line x1="330" y1="480" x2="496" y2="480" stroke="#315176"/>
+  <text x="413" y="504" text-anchor="middle" class="body">API / 事件 / 数据映射</text>
+  <text x="413" y="528" text-anchor="middle" class="body">幂等 / 重试 / 限流 / 熔断</text>
+  <text x="413" y="552" text-anchor="middle" class="body">接入健康度 / 迁移状态</text>
+  <text x="413" y="574" text-anchor="middle" class="small">隔离存量系统模型与变化</text>
+
+  <rect x="536" y="414" width="286" height="80" rx="10" class="card-strong"/>
+  <text x="679" y="440" text-anchor="middle" class="card-title">确定性业务流程编排</text>
+  <text x="679" y="461" text-anchor="middle" fill="#7dd3fc" font-size="11">Temporal / Camunda / Flowable</text>
+  <text x="679" y="481" text-anchor="middle" class="small">版本 · 状态 · 定时器 · 重试 · 补偿 · 人工任务</text>
+
+  <rect x="842" y="414" width="204" height="80" rx="10" class="card-ai"/>
+  <text x="944" y="440" text-anchor="middle" class="card-title">AI Agent 编排</text>
+  <text x="944" y="461" text-anchor="middle" fill="#d8b4fe" font-size="11">LangGraph · RAG · 工具</text>
+  <text x="944" y="481" text-anchor="middle" class="small">结构化输出 · 评测 · 人工确认</text>
+
+  <rect x="1066" y="414" width="184" height="80" rx="10" fill="#291c3e" stroke="#c084fc"/>
+  <text x="1158" y="440" text-anchor="middle" class="card-title">模型网关</text>
+  <text x="1158" y="461" text-anchor="middle" fill="#d8b4fe" font-size="11">路由 · 限额 · 脱敏</text>
+  <text x="1158" y="481" text-anchor="middle" class="small">LLM / Embedding / Reranker</text>
+
+  <rect x="536" y="514" width="714" height="76" rx="10" fill="#0f3844" stroke="#22d3ee"/>
+  <text x="893" y="537" text-anchor="middle" class="card-title">领域能力中心（模块化单体优先）</text>
+  <rect x="554" y="550" width="96" height="26" rx="6" fill="#164e63"/>
+  <text x="602" y="568" text-anchor="middle" fill="#cffafe" font-size="11">需求/策略</text>
+  <rect x="660" y="550" width="104" height="26" rx="6" fill="#164e63"/>
+  <text x="712" y="568" text-anchor="middle" fill="#cffafe" font-size="11">用例/场景</text>
+  <rect x="774" y="550" width="104" height="26" rx="6" fill="#164e63"/>
+  <text x="826" y="568" text-anchor="middle" fill="#cffafe" font-size="11">执行计划</text>
+  <rect x="888" y="550" width="104" height="26" rx="6" fill="#164e63"/>
+  <text x="940" y="568" text-anchor="middle" fill="#cffafe" font-size="11">结果评估</text>
+  <rect x="1002" y="550" width="104" height="26" rx="6" fill="#164e63"/>
+  <text x="1054" y="568" text-anchor="middle" fill="#cffafe" font-size="11">缺陷闭环</text>
+  <rect x="1116" y="550" width="116" height="26" rx="6" fill="#164e63"/>
+  <text x="1174" y="568" text-anchor="middle" fill="#cffafe" font-size="11">报告/项目</text>
+
+  <!-- MAIN: EXECUTION -->
+  <rect x="280" y="634" width="1000" height="146" rx="14" class="plane" filter="url(#shadow)"/>
+  <rect x="298" y="622" width="96" height="27" rx="13.5" fill="#d97706"/>
+  <text x="346" y="640" text-anchor="middle" class="pill-text">执行面</text>
+  <rect x="320" y="676" width="250" height="78" rx="10" class="card-exec"/>
+  <text x="445" y="703" text-anchor="middle" class="card-title">执行调度与资源管理</text>
+  <text x="445" y="726" text-anchor="middle" fill="#fcd34d" font-size="11">优先级 · 配额 · 租约 · 取消</text>
+  <text x="445" y="745" text-anchor="middle" class="small">全局 run_id / 幂等键</text>
+  <rect x="600" y="676" width="250" height="78" rx="10" class="card-exec"/>
+  <text x="725" y="703" text-anchor="middle" class="card-title">执行 Worker 与连接器</text>
+  <text x="725" y="726" text-anchor="middle" fill="#fcd34d" font-size="11">超时 · 重试 · 心跳 · 结果摘要</text>
+  <text x="725" y="745" text-anchor="middle" class="small">隔离不同台架与仿真运行时</text>
+  <rect x="880" y="676" width="350" height="78" rx="10" class="card-exec"/>
+  <text x="1055" y="703" text-anchor="middle" class="card-title">台架 / 仿真器 / 实车运行环境</text>
+  <text x="1055" y="726" text-anchor="middle" fill="#fcd34d" font-size="11">HIL · SIL · MIL · Carla · VTD · PanoSim</text>
+  <text x="1055" y="745" text-anchor="middle" class="small">控制命令与数据采集职责分离</text>
+
+  <!-- MAIN: DATA -->
+  <rect x="280" y="798" width="1000" height="202" rx="14" class="plane" filter="url(#shadow)"/>
+  <rect x="298" y="786" width="96" height="27" rx="13.5" fill="#059669"/>
+  <text x="346" y="804" text-anchor="middle" class="pill-text">数据面</text>
+  <rect x="310" y="840" width="198" height="66" rx="10" class="card-data"/>
+  <text x="409" y="866" text-anchor="middle" class="card-title">事件总线与工作队列</text>
+  <text x="409" y="888" text-anchor="middle" fill="#a7f3d0" font-size="11">领域事件 · 任务分发 · 死信</text>
+  <rect x="524" y="840" width="198" height="66" rx="10" class="card-data"/>
+  <text x="623" y="866" text-anchor="middle" class="card-title">流式接入与解析</text>
+  <text x="623" y="888" text-anchor="middle" fill="#a7f3d0" font-size="11">PTP/gPTP · DBC/ARXML · 对齐</text>
+  <rect x="738" y="840" width="198" height="66" rx="10" class="card-data"/>
+  <text x="837" y="866" text-anchor="middle" class="card-title">数据工厂</text>
+  <text x="837" y="888" text-anchor="middle" fill="#a7f3d0" font-size="11">标注 · 特征 · 质量 · 回放</text>
+  <rect x="952" y="840" width="298" height="66" rx="10" class="card-data"/>
+  <text x="1101" y="866" text-anchor="middle" class="card-title">测试资产与数据目录</text>
+  <text x="1101" y="888" text-anchor="middle" fill="#a7f3d0" font-size="11">场景 · 用例 · 信号 · Corner Case · 证据</text>
+
+  <rect x="310" y="924" width="940" height="56" rx="10" fill="#0d2f29" stroke="#2f6e5b"/>
+  <text x="384" y="949" text-anchor="middle" fill="#6ee7b7" font-size="12" font-weight="700">关系数据库</text>
+  <text x="384" y="968" text-anchor="middle" class="small">PostgreSQL</text>
+  <line x1="480" y1="938" x2="480" y2="968" stroke="#2f6e5b"/>
+  <text x="570" y="949" text-anchor="middle" fill="#6ee7b7" font-size="12" font-weight="700">时序数据库</text>
+  <text x="570" y="968" text-anchor="middle" class="small">InfluxDB / TDengine</text>
+  <line x1="670" y1="938" x2="670" y2="968" stroke="#2f6e5b"/>
+  <text x="765" y="949" text-anchor="middle" fill="#6ee7b7" font-size="12" font-weight="700">对象存储</text>
+  <text x="765" y="968" text-anchor="middle" class="small">MinIO / S3</text>
+  <line x1="860" y1="938" x2="860" y2="968" stroke="#2f6e5b"/>
+  <text x="960" y="949" text-anchor="middle" fill="#6ee7b7" font-size="12" font-weight="700">向量与检索</text>
+  <text x="960" y="968" text-anchor="middle" class="small">Milvus / pgvector / Search</text>
+  <line x1="1060" y1="938" x2="1060" y2="968" stroke="#2f6e5b"/>
+  <text x="1155" y="949" text-anchor="middle" fill="#6ee7b7" font-size="12" font-weight="700">审计证据</text>
+  <text x="1155" y="968" text-anchor="middle" class="small">受控 / 不可篡改</text>
+
+  <!-- RIGHT: CROSS CUTTING -->
+  <rect x="1304" y="112" width="260" height="888" rx="14" class="rail" filter="url(#shadow)"/>
+  <rect x="1304" y="112" width="260" height="48" rx="14" fill="#2a1830"/>
+  <text x="1434" y="143" text-anchor="middle" fill="#f0abfc" font-size="17" font-weight="700">横切治理</text>
+  <text x="1434" y="184" text-anchor="middle" class="small">覆盖全部运行组件，不构成串行层</text>
+
+  <rect x="1324" y="206" width="220" height="132" rx="10" fill="#102a46" stroke="#38bdf8"/>
+  <text x="1434" y="235" text-anchor="middle" fill="#7dd3fc" font-size="15" font-weight="700">可观测性</text>
+  <text x="1434" y="261" text-anchor="middle" class="body">日志 · 指标 · Trace</text>
+  <text x="1434" y="284" text-anchor="middle" class="body">业务流 / Agent / 数据质量</text>
+  <text x="1434" y="307" text-anchor="middle" class="body">correlation_id / run_id</text>
+  <text x="1434" y="326" text-anchor="middle" class="small">告警绑定用户影响与负责人</text>
+
+  <rect x="1324" y="356" width="220" height="132" rx="10" fill="#2b181c" stroke="#ef4444"/>
+  <text x="1434" y="385" text-anchor="middle" fill="#fca5a5" font-size="15" font-weight="700">安全与合规</text>
+  <text x="1434" y="411" text-anchor="middle" class="body">SSO · RBAC · 密钥与脱敏</text>
+  <text x="1434" y="434" text-anchor="middle" class="body">审计 · 合规证据链</text>
+  <text x="1434" y="457" text-anchor="middle" class="body">ISO 26262 / SOTIF 支撑</text>
+  <text x="1434" y="476" text-anchor="middle" class="small">高风险 AI 动作必须审批</text>
+
+  <rect x="1324" y="506" width="220" height="132" rx="10" fill="#102c29" stroke="#34d399"/>
+  <text x="1434" y="535" text-anchor="middle" fill="#6ee7b7" font-size="15" font-weight="700">数据治理</text>
+  <text x="1434" y="561" text-anchor="middle" class="body">Schema · 语义 · 质量</text>
+  <text x="1434" y="584" text-anchor="middle" class="body">血缘 · 版本 · 生命周期</text>
+  <text x="1434" y="607" text-anchor="middle" class="body">所有者 · 新鲜度 · 完整性</text>
+  <text x="1434" y="626" text-anchor="middle" class="small">坏数据隔离与可回放</text>
+
+  <rect x="1324" y="656" width="220" height="132" rx="10" fill="#1e2141" stroke="#818cf8"/>
+  <text x="1434" y="685" text-anchor="middle" fill="#c7d2fe" font-size="15" font-weight="700">CI/CD 与平台工程</text>
+  <text x="1434" y="711" text-anchor="middle" class="body">Build · Test · Package</text>
+  <text x="1434" y="734" text-anchor="middle" class="body">Deploy · Verify · Rollback</text>
+  <text x="1434" y="757" text-anchor="middle" class="body">灰度 · 功能开关 · Runbook</text>
+  <text x="1434" y="776" text-anchor="middle" class="small">工程支撑，不是运行时数据链路</text>
+
+  <rect x="1324" y="806" width="220" height="170" rx="10" fill="#101d31" stroke="#3d5c7e"/>
+  <text x="1434" y="835" text-anchor="middle" fill="#93c5fd" font-size="15" font-weight="700">统一运行基线</text>
+  <text x="1342" y="868" class="body">• 幂等 / 超时 / 重试 / 补偿</text>
+  <text x="1342" y="897" class="body">• 健康检查 / 熔断 / 限流</text>
+  <text x="1342" y="926" class="body">• 灰度发布 / 可验证回滚</text>
+  <text x="1342" y="955" class="body">• 所有关键路径可追踪</text>
+
+  <!-- INTERNAL FLOWS -->
+  <path d="M461 213 V278" class="control"/>
+  <path d="M765 213 V248 H422 V278" class="control" opacity="0.75"/>
+  <path d="M1084 213 V248 H422 V278" class="control" opacity="0.75"/>
+  <path d="M422 336 V414 H679" class="control"/>
+  <path d="M884 336 V394 H679 V414" class="control"/>
+  <path d="M1130 336 V394 H413 V414" class="event"/>
+  <path d="M516 458 H536" class="control"/>
+  <path d="M822 454 H842" class="control"/>
+  <path d="M1046 454 H1066" class="control"/>
+  <path d="M679 494 V514" class="control"/>
+  <path d="M944 494 V514" class="event"/>
+  <path d="M679 590 V616 H445 V676" class="control"/>
+  <path d="M570 715 H600" class="control"/>
+  <path d="M850 715 H880" class="control"/>
+  <path d="M725 754 V820 H409 V840" class="event"/>
+  <path d="M1055 754 V820 H623 V840" class="bulk"/>
+  <path d="M508 873 H524" class="event"/>
+  <path d="M722 873 H738" class="bulk"/>
+  <path d="M936 873 H952" class="bulk"/>
+  <path d="M1101 906 V924" class="bulk"/>
+  <path d="M409 840 V618 H893 V590" class="event" opacity="0.85"/>
+
+  <!-- SOURCE FLOWS -->
+  <path d="M238 232 H272 V466 H310" class="control"/>
+  <path d="M238 360 H266 V307 H772" class="control"/>
+  <path d="M238 480 H278 V510 H310" class="event"/>
+  <path d="M238 592 H270 V398 H944 V414" class="event"/>
+  <path d="M238 710 H264 V715 H320" class="control"/>
+  <path d="M238 758 H268 V873 H524" class="bulk"/>
+
+  <!-- GOVERNANCE COVERAGE -->
+  <path d="M1304 250 H1286 V968 H1280" class="govern"/>
+  <line x1="1286" y1="190" x2="1286" y2="970" class="govern"/>
+
+  <!-- BOTTOM PRINCIPLES / LEGEND -->
+  <rect x="36" y="1020" width="1528" height="120" rx="14" fill="#0d192a" stroke="#274060" filter="url(#shadow)"/>
+  <text x="58" y="1052" fill="#e2e8f0" font-size="16" font-weight="700">架构原则</text>
+  <rect x="58" y="1068" width="320" height="50" rx="8" fill="#10253b"/>
+  <text x="218" y="1088" text-anchor="middle" fill="#7dd3fc" font-size="12" font-weight="700">业务流程编排 ≠ AI Agent 编排</text>
+  <text x="218" y="1107" text-anchor="middle" class="small">确定性状态与非确定性推理分治</text>
+  <rect x="392" y="1068" width="320" height="50" rx="8" fill="#10253b"/>
+  <text x="552" y="1088" text-anchor="middle" fill="#f0abfc" font-size="12" font-weight="700">业务元数据 ≠ 原始传感器数据</text>
+  <text x="552" y="1107" text-anchor="middle" class="small">分别进入控制面和数据面</text>
+  <rect x="726" y="1068" width="320" height="50" rx="8" fill="#10253b"/>
+  <text x="886" y="1088" text-anchor="middle" fill="#6ee7b7" font-size="12" font-weight="700">模块化单体优先</text>
+  <text x="886" y="1107" text-anchor="middle" class="small">按团队、扩缩容与发布证据拆分服务</text>
+  <rect x="1060" y="1068" width="484" height="50" rx="8" fill="#10253b"/>
+  <text x="1090" y="1088" fill="#94a3b8" font-size="11">图例</text>
+  <line x1="1140" y1="1085" x2="1180" y2="1085" class="control"/>
+  <text x="1188" y="1089" class="small">命令 / API</text>
+  <line x1="1260" y1="1085" x2="1300" y2="1085" class="event"/>
+  <text x="1308" y="1089" class="small">事件 / 状态</text>
+  <line x1="1392" y1="1085" x2="1432" y2="1085" class="bulk"/>
+  <text x="1440" y="1089" class="small">大体量数据</text>
+  <text x="1302" y="1110" text-anchor="middle" class="small">契约、所有权、幂等、可观测与回滚贯穿所有路径</text>
+
+  <text x="800" y="1164" text-anchor="middle" fill="#52667d" font-size="11">智能测试平台 · Architecture V2 · 2026-07-17 · 产品需求阶段 / 架构规划</text>
+</svg>

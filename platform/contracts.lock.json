@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "contracts": [
+    {
+      "serviceId": "domain-service",
+      "name": "domain-service-api",
+      "version": "1.0.0",
+      "source": "contracts/openapi/domain-service.v1.json",
+      "sha256": "159fa2579101d1c856cb52529d7d26e6cc394a8103abdcd4f963add14f903822"
+    },
+    {
+      "serviceId": "todo-list-service",
+      "name": "todo-list-service-api",
+      "version": "1.0.0",
+      "source": "contracts/openapi/todo-list-service.v1.json",
+      "sha256": "634688f7e517c47db8042bdafddee43772dae774854e49d1af4d93fa0bf465bd"
+    }
+  ]
+}

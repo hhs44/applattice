@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "environment": "production",
+  "platform": {
+    "version": "1.0.0",
+    "portalImage": "registry.intra.example.com/testing/portal@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "gatewayImage": "registry.intra.example.com/testing/gateway@sha256:1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "services": [
+    {
+      "id": "domain-service",
+      "contractVersion": "1.0.0",
+      "image": "registry.intra.example.com/testing/domain-service@sha256:2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    {
+      "id": "todo-list-service",
+      "contractVersion": "1.0.0",
+      "image": "registry.intra.example.com/testing/todo-list-service@sha256:3333333333333333333333333333333333333333333333333333333333333333"
+    }
+  ],
+  "change": {
+    "ticket": "CHANGE-0000",
+    "approvedBy": "CHANGE_ME",
+    "rollbackManifest": "release-manifest.previous.json"
+  }
+}

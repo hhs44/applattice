@@ -1,0 +1,35 @@
+name: 问题咨询
+description: 咨询使用方式、接入边界或迁移路径
+title: '[Question]: '
+labels: []
+assignees: []
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: 目标
+      description: 你希望通过本套件完成什么？
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: 当前环境和已尝试方式
+      description: 请提供必要的版本和脱敏配置，不要上传凭据或客户数据。
+    validations:
+      required: true
+  - type: textarea
+    id: blocker
+    attributes:
+      label: 具体阻塞点
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 提交确认
+      options:
+        - label: 我已阅读 README、开发文档和 SUPPORT.md。
+          required: true
+        - label: 这不是需要私密报告的安全漏洞。
+          required: true

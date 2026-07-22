@@ -1,0 +1,134 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Domain Service API",
+    "version": "1.0.0",
+    "description": "测试运行领域服务对 Gateway/BFF 暴露的版本化契约。"
+  },
+  "servers": [{ "url": "/api/v1" }],
+  "paths": {
+    "/dashboard": {
+      "get": {
+        "operationId": "getDashboard",
+        "responses": {
+          "200": {
+            "description": "领域工作台数据",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/DomainDashboard" } }
+            }
+          }
+        }
+      }
+    },
+    "/test-runs": {
+      "get": {
+        "operationId": "listTestRuns",
+        "responses": {
+          "200": {
+            "description": "测试运行列表",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/TestRunList" } }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createTestRun",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1 }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateTestRunRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "已创建",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/TestRun" } }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RunStatus": {
+        "type": "string",
+        "enum": ["queued", "running", "passed", "failed"]
+      },
+      "TestRun": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "environment", "status", "progress", "createdAt"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "environment": { "type": "string" },
+          "status": { "$ref": "#/components/schemas/RunStatus" },
+          "progress": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "CreateTestRunRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "environment"],
+        "properties": {
+          "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+          "environment": { "type": "string", "minLength": 1, "maxLength": 40 }
+        }
+      },
+      "TestRunList": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["items", "total"],
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/TestRun" } },
+          "total": { "type": "integer", "minimum": 0 }
+        }
+      },
+      "DashboardMetrics": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["totalCases", "runningJobs", "passRate", "openDefects"],
+        "properties": {
+          "totalCases": { "type": "integer", "minimum": 0 },
+          "runningJobs": { "type": "integer", "minimum": 0 },
+          "passRate": { "type": "number", "minimum": 0, "maximum": 100 },
+          "openDefects": { "type": "integer", "minimum": 0 }
+        }
+      },
+      "TrendPoint": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["label", "passed", "failed"],
+        "properties": {
+          "label": { "type": "string" },
+          "passed": { "type": "integer", "minimum": 0 },
+          "failed": { "type": "integer", "minimum": 0 }
+        }
+      },
+      "DomainDashboard": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["metrics", "trend", "recentRuns"],
+        "properties": {
+          "metrics": { "$ref": "#/components/schemas/DashboardMetrics" },
+          "trend": { "type": "array", "items": { "$ref": "#/components/schemas/TrendPoint" } },
+          "recentRuns": { "type": "array", "items": { "$ref": "#/components/schemas/TestRun" } }
+        }
+      }
+    }
+  }
+}

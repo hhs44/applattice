@@ -1,0 +1,60 @@
+name: intelligent-testing-platform
+
+services:
+  gateway:
+    image: ${GATEWAY_IMAGE:-intelligent-testing/gateway:0.1.0}
+    build:
+      context: ..
+      dockerfile: deployment/docker/Dockerfile.gateway
+      args:
+        NODE_IMAGE: ${NODE_IMAGE:-node:22-alpine}
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      AUTH_MODE: ${AUTH_MODE:-dev}
+      GATEWAY_PORT: 4000
+      PORTAL_ORIGIN: ${PORTAL_ORIGIN:-http://localhost:8080}
+      UPSTREAMS_JSON: ${UPSTREAMS_JSON:-{"domain-service":{"baseUrl":"http://domain-service:4100","healthPath":"/health/ready","requestTimeoutMs":5000,"required":true}}}
+      APP_CATALOG_JSON: ${APP_CATALOG_JSON:-{}}
+      OIDC_ISSUER: ${OIDC_ISSUER:-}
+      OIDC_AUDIENCE: ${OIDC_AUDIENCE:-}
+      OIDC_JWKS_URL: ${OIDC_JWKS_URL:-}
+    networks: [platform]
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://127.0.0.1:4000/health/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    restart: unless-stopped
+
+  portal:
+    image: ${PORTAL_IMAGE:-intelligent-testing/portal:0.1.0}
+    build:
+      context: ..
+      dockerfile: deployment/docker/Dockerfile.portal
+      args:
+        NODE_IMAGE: ${NODE_IMAGE:-node:22-alpine}
+        NGINX_IMAGE: ${NGINX_IMAGE:-nginx:1.27-alpine}
+    ports:
+      - '${PORTAL_PORT:-8080}:8080'
+    depends_on:
+      gateway:
+        condition: service_healthy
+    networks: [platform]
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:8080/']
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 5s
+    restart: unless-stopped
+
+networks:
+  platform:
+    driver: bridge

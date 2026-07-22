@@ -1,0 +1,10 @@
+services:
+  __APP_ID__-web:
+    build: { context: .., dockerfile: frontend/Dockerfile }
+    ports: ['__WEB_PORT__:__WEB_PORT__']
+  __SERVICE_ID__:
+    build: { context: ../backend, dockerfile: Dockerfile }
+    ports: ['__API_PORT__:__API_PORT__']
+    volumes: ['__APP_ID__-data:/data']
+volumes:
+  __APP_ID__-data:

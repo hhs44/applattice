@@ -1,0 +1,27 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "__SERVICE_TITLE__",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/health/live": { "get": { "responses": { "200": { "description": "Alive" } } } },
+    "/health/ready": { "get": { "responses": { "200": { "description": "Ready" } } } },
+    "/api/v1/records": {
+      "get": { "responses": { "200": { "description": "Record list" } } },
+      "post": {
+        "responses": {
+          "201": { "description": "Created" },
+          "409": { "description": "Idempotency conflict" }
+        }
+      }
+    },
+    "/api/v1/records/{recordId}": {
+      "get": {
+        "responses": { "200": { "description": "Record" }, "404": { "description": "Not found" } }
+      },
+      "patch": { "responses": { "200": { "description": "Updated" } } },
+      "delete": { "responses": { "204": { "description": "Deleted" } } }
+    }
+  }
+}
