@@ -20,7 +20,7 @@ packages = ["src/service"]
 [dependency-groups]
 dev = [
   "httpx2>=2.7,<3.0",
-  "mypy>=1.17,<2.0",
+  "mypy>=2.3.0,<3.0",
   "pytest>=8.4,<9.0",
   "ruff>=0.12,<1.0",
 ]
