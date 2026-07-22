@@ -16,8 +16,8 @@
 - [ ] 确认许可证、版权主体、品牌和架构图片的公开授权；
 - [x] 选择 GitHub 组织和最终仓库名：`hhs44/intelligent-testing-platform-template`；
 - [x] 确定仓库地址后补充 `package.json` 的 `repository`、`homepage` 和 `bugs` 字段；
-- [ ] 配置私密安全联系渠道；
-- [ ] 启用 GitHub 安全功能和主分支规则集；
-- [ ] 确认示例中的 `*.intra.example.com` 只作为占位符，不含真实基础设施信息；
-- [ ] 从全新克隆执行完整门禁；
+- [x] 启用 GitHub 私密漏洞报告作为安全联系渠道；
+- [x] 启用 GitHub 安全功能和主分支规则集；
+- [x] 确认示例中的 `*.intra.example.com` 只作为占位符，不含真实基础设施信息；
+- [x] 通过 GitHub Actions 从全新 checkout 执行完整门禁；
 - [ ] 创建首个签名标签和 GitHub Release。
