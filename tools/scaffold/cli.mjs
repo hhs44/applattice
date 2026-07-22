@@ -90,7 +90,7 @@ async function installPythonBackend(args, backendDirectory) {
     '-e',
     '.',
     'pytest>=8.4,<9.0',
-    'httpx2>=2.7,<3.0',
+    'httpx>=0.27,<1.0',
     'ruff>=0.12,<1.0',
     'mypy>=1.17,<2.0',
   ];

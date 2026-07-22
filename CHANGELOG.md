@@ -17,8 +17,14 @@
 
 ### Changed
 
+- 重写 README 的从零入门路径，补充环境准备、Todo 完整示例、Portal/App 生成、端口、参数、日常命令与故障排查；
 - npm 包作用域从 `@platform/*` 调整为 `@applattice/*`，并同步更新门户、Gateway、模板、锁文件和离线制品；
 - 门户默认品牌、脚手架默认值、镜像示例和 Schema 标识统一为 AppLattice。
+
+### Fixed
+
+- 修复 Python 应用脚手架安装依赖时的 `httpx` 包名，并允许 Todo 启动器使用系统 `uv`。
+- 格式门禁只读取 Git 管理的文件，避免多语言工作区中的虚拟环境和测试缓存阻塞 Prettier。
 
 ### Security
 

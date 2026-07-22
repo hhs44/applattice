@@ -10,6 +10,12 @@ $runtime = Join-Path $workspace ".tmp/local-todo-runtime"
 $statePath = Join-Path $runtime "processes.json"
 $python = Join-Path $service ".venv/Scripts/python.exe"
 $uv = Join-Path $service ".venv/Scripts/uv.exe"
+if (-not (Test-Path $uv)) {
+  $uvCommand = Get-Command uv -ErrorAction SilentlyContinue
+  if ($uvCommand) {
+    $uv = $uvCommand.Source
+  }
+}
 $vite = Join-Path $workspace "apps/portal/node_modules/vite/bin/vite.js"
 $todoFrontend = Join-Path $service "frontend"
 $todoVite = Join-Path $todoFrontend "node_modules/vite/bin/vite.js"
