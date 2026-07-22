@@ -7,7 +7,7 @@ requires-python = ">=3.12,<3.14"
 dependencies = [
   "fastapi>=0.116,<1.0",
   "pydantic-settings>=2.10,<3.0",
-  "uvicorn[standard]>=0.35,<1.0",
+  "uvicorn[standard]>=0.51.0,<1.0",
 ]
 
 [build-system]
