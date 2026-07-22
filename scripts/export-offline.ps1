@@ -28,9 +28,9 @@ try {
 docker compose -f deployment/compose.yaml build
 Assert-CommandSucceeded "docker compose build"
 docker save --output (Join-Path $bundle "platform-images.tar") `
-  intelligent-testing/portal:0.1.0 `
-  intelligent-testing/gateway:0.1.0 `
-  intelligent-testing/domain-service:0.1.0
+  applattice/portal:0.1.0 `
+  applattice/gateway:0.1.0 `
+  applattice/domain-service:0.1.0
 Assert-CommandSucceeded "docker save"
 
 Copy-Item deployment/compose.yaml (Join-Path $bundle "compose.yaml") -Force

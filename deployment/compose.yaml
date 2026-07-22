@@ -1,8 +1,8 @@
-name: intelligent-testing-template
+name: applattice
 
 services:
   domain-service:
-    image: intelligent-testing/domain-service:0.1.0
+    image: applattice/domain-service:0.1.0
     build:
       context: ..
       dockerfile: deployment/docker/Dockerfile.domain-service
@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
 
   gateway:
-    image: intelligent-testing/gateway:0.1.0
+    image: applattice/gateway:0.1.0
     build:
       context: ..
       dockerfile: deployment/docker/Dockerfile.gateway
@@ -62,7 +62,7 @@ services:
     restart: unless-stopped
 
   portal:
-    image: intelligent-testing/portal:0.1.0
+    image: applattice/portal:0.1.0
     build:
       context: ..
       dockerfile: deployment/docker/Dockerfile.portal

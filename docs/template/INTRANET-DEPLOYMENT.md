@@ -61,9 +61,9 @@ pnpm scaffold app sample "离线示例" --backend python --offline-bundle .\offl
 ```dotenv
 NODE_ENV=production
 AUTH_MODE=oidc
-OIDC_ISSUER=https://sso.intra.example.com/realms/testing
-OIDC_AUDIENCE=testing-platform
-OIDC_JWKS_URL=https://sso.intra.example.com/realms/testing/protocol/openid-connect/certs
+OIDC_ISSUER=https://sso.intra.example.com/realms/applattice
+OIDC_AUDIENCE=applattice
+OIDC_JWKS_URL=https://sso.intra.example.com/realms/applattice/protocol/openid-connect/certs
 ```
 
 OIDC Token 至少提供稳定主体标识。角色/权限需映射到平台白名单；服务间调用使用独立工作负载身份，不复用用户长期凭据。

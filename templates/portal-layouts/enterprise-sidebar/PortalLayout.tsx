@@ -1,4 +1,4 @@
-import type { Principal } from '@platform/contracts';
+import type { Principal } from '@applattice/contracts';
 import type { ReactNode } from 'react';
 import type { PortalConfig, ThemeChoice } from '../../core/portal-config.js';
 

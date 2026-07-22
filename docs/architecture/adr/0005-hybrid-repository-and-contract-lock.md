@@ -12,7 +12,7 @@
 
 采用混合仓库：
 
-- `platform-core` Monorepo 拥有 Portal、Gateway/BFF、UI、SDK、服务目录、契约锁、集成测试和环境编排；
+- `applattice` Monorepo 拥有 Portal、Gateway/BFF、UI、SDK、服务目录、契约锁、集成测试和环境编排；
 - 每个达到拆分门槛的业务服务拥有独立仓库、数据、OpenAPI/Event Schema、流水线和不可变镜像；
 - API 契约由生产者服务仓库拥有并发布，平台通过 `contracts.lock.json` 固定名称、版本和 SHA-256，不复制可变的内部实现包；
 - 本地工作区使用不提交的 `workspace.local.json` 指向多个检出目录，生成 Compose 叠加文件；CI 与生产只消费已发布契约和镜像；

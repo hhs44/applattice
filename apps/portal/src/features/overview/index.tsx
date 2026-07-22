@@ -1,6 +1,6 @@
-import { Badge, Card } from '@platform/ui';
+import { Badge, Card } from '@applattice/ui';
 import { useEffect, useState } from 'react';
-import type { PortalDashboard, TestRun } from '@platform/contracts';
+import type { PortalDashboard, TestRun } from '@applattice/contracts';
 import type { FeatureProps, PortalFeature } from '../types.js';
 
 function statusLabel(status: TestRun['status']) {

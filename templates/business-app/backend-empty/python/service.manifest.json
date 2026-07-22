@@ -5,7 +5,7 @@
   "owner": "CHANGE_ME",
   "runtime": "python",
   "port": "__PORT_NUMBER__",
-  "repository": "ssh://git.intra.example.com/testing/__SERVICE_ID__.git",
+  "repository": "ssh://git.intra.example.com/business-apps/__SERVICE_ID__.git",
   "apiBasePath": "/api/v1",
   "healthPath": "/health/ready",
   "contract": {

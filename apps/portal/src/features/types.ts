@@ -1,5 +1,5 @@
-import type { Permission, Principal } from '@platform/contracts';
-import type { PlatformClient } from '@platform/sdk';
+import type { Permission, Principal } from '@applattice/contracts';
+import type { PlatformClient } from '@applattice/sdk';
 import type { ComponentType } from 'react';
 
 export type FeatureProps = {

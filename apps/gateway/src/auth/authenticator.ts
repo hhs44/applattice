@@ -3,7 +3,7 @@ import {
   PrincipalSchema,
   type Permission,
   type Principal,
-} from '@platform/contracts';
+} from '@applattice/contracts';
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 import type { FastifyRequest } from 'fastify';
 import type { GatewayConfig } from '../config.js';

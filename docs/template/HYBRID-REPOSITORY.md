@@ -5,8 +5,8 @@
 推荐的物理目录只是开发者本机工作区，不是一个 Git 仓库：
 
 ```text
-testing-workspace/
-├─ platform-core/                 # 本仓库
+applattice-workspace/
+├─ applattice/                 # 本仓库
 │  ├─ apps/portal                 # 统一门户
 │  ├─ apps/gateway                # Gateway / BFF
 │  ├─ packages/ui                 # 平台 UI 制品
@@ -89,7 +89,7 @@ pnpm hybrid:check -- --strict
 已注册服务升级契约时执行：
 
 ```powershell
-pnpm contracts:update ..\report-service --image registry.intra.example.com/testing/report-service:1.4.0
+pnpm contracts:update ..\report-service --image registry.intra.example.com/applattice/report-service:1.4.0
 pnpm contracts:verify
 ```
 

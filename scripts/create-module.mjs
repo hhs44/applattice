@@ -52,7 +52,7 @@ for (const file of Object.values(files)) {
 
 await writeFile(
   files.portal,
-  `import { Card } from '@platform/ui';
+  `import { Card } from '@applattice/ui';
 import { useEffect, useState } from 'react';
 import type { FeatureProps, PortalFeature } from '../types.js';
 

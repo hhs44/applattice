@@ -100,9 +100,21 @@ export async function prepareOfflineBundle(outputArg = 'offline-bundle', options
   } finally {
     await rm(fetchWorkspace, { recursive: true, force: true });
   }
-  run('pnpm', ['--filter', '@platform/microfrontend-bridge', '--filter', '@platform/ui', 'build']);
-  run('pnpm', ['--filter', '@platform/microfrontend-bridge', 'pack', '--pack-destination', vendor]);
-  run('pnpm', ['--filter', '@platform/ui', 'pack', '--pack-destination', vendor]);
+  run('pnpm', [
+    '--filter',
+    '@applattice/microfrontend-bridge',
+    '--filter',
+    '@applattice/ui',
+    'build',
+  ]);
+  run('pnpm', [
+    '--filter',
+    '@applattice/microfrontend-bridge',
+    'pack',
+    '--pack-destination',
+    vendor,
+  ]);
+  run('pnpm', ['--filter', '@applattice/ui', 'pack', '--pack-destination', vendor]);
   const vendorArtifacts = (await readdir(vendor)).filter((name) => name.endsWith('.tgz'));
   await writeJson(resolve(vendor, 'manifest.json'), {
     schemaVersion: 1,

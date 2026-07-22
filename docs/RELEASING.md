@@ -33,7 +33,7 @@ pnpm verify
 
 ## 2. 创建 GitHub 仓库
 
-建议使用描述性仓库名，例如 `intelligent-testing-platform-kit`，默认分支使用 `main`。首次发布不要自动导入额外 README、许可证或 `.gitignore`，避免与本仓库文件冲突。
+建议使用描述性仓库名，例如 `applattice-kit`，默认分支使用 `main`。首次发布不要自动导入额外 README、许可证或 `.gitignore`，避免与本仓库文件冲突。
 
 推送后在 GitHub 设置中：
 

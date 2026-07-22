@@ -170,7 +170,7 @@ for (const service of services) {
   } else {
     const nodeArgs =
       service.id === 'domain-service'
-        ? ['--filter', '@platform/domain-service', 'dev']
+        ? ['--filter', '@applattice/domain-service', 'dev']
         : ['--dir', cwd, 'dev'];
     start(service.id, 'pnpm', nodeArgs, service.id === 'domain-service' ? root : cwd, {
       SERVICE_NAME: service.id,
@@ -204,7 +204,7 @@ for (const application of applications) {
   );
 }
 
-start('gateway', 'pnpm', ['--filter', '@platform/gateway', 'dev'], root, {
+start('gateway', 'pnpm', ['--filter', '@applattice/gateway', 'dev'], root, {
   GATEWAY_PORT: String(gatewayPort),
   PORTAL_ORIGIN: `http://127.0.0.1:${portalPort}`,
   UPSTREAMS_JSON: JSON.stringify(upstreams),
@@ -214,7 +214,7 @@ await waitFor(`http://127.0.0.1:${gatewayPort}/health/ready`, 'Gateway');
 start(
   'portal',
   'pnpm',
-  ['--filter', '@platform/portal', 'dev', '--host', '127.0.0.1', '--port', String(portalPort)],
+  ['--filter', '@applattice/portal', 'dev', '--host', '127.0.0.1', '--port', String(portalPort)],
   root,
   {
     GATEWAY_URL: `http://127.0.0.1:${gatewayPort}`,

@@ -11,7 +11,7 @@
 
 `platform-app.manifest.json` 是应用注册唯一来源。注册同时更新应用目录、服务目录、OpenAPI 契约锁和本地工作区映射；任一步失败都回滚。
 
-React 与 ReactDOM 由门户和远程模块共享，`@platform/microfrontend-bridge` 的主版本用于运行时兼容校验。远程模块加载必须有超时、重试和错误边界，单个应用故障不能使门户白屏。
+React 与 ReactDOM 由门户和远程模块共享，`@applattice/microfrontend-bridge` 的主版本用于运行时兼容校验。远程模块加载必须有超时、重试和错误边界，单个应用故障不能使门户白屏。
 
 ## 后果
 

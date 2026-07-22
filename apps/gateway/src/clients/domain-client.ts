@@ -6,8 +6,8 @@ import {
   type DomainDashboard,
   type TestRun,
   type TestRunList,
-} from '@platform/contracts';
-import type { Principal } from '@platform/contracts';
+} from '@applattice/contracts';
+import type { Principal } from '@applattice/contracts';
 import type { ServiceClient } from './service-client.js';
 
 export interface DomainClient {

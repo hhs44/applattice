@@ -1,5 +1,5 @@
-import { PLATFORM_BRIDGE_VERSION, type PlatformAppProps } from '@platform/microfrontend-bridge';
-import { Button, Card, EmptyState } from '@platform/ui';
+import { PLATFORM_BRIDGE_VERSION, type PlatformAppProps } from '@applattice/microfrontend-bridge';
+import { Button, Card, EmptyState } from '@applattice/ui';
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import type { BusinessRecord, BusinessRecordList } from './types.js';
 import './styles.css';

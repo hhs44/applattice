@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import type { CreateTestRunRequest, TestRun } from '@platform/contracts';
+import type { CreateTestRunRequest, TestRun } from '@applattice/contracts';
 
 export interface RunRepository {
   list(): Promise<TestRun[]>;

@@ -38,7 +38,7 @@
       ],
       "deployment": {
         "imageEnv": "TODO_LIST_WEB_IMAGE",
-        "image": "intelligent-testing/todo-list-web:1.0.0",
+        "image": "applattice/todo-list-web:1.0.0",
         "containerPort": 4300,
         "dockerfile": "frontend/Dockerfile"
       },

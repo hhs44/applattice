@@ -3,8 +3,8 @@ FROM ${NODE_IMAGE} AS build
 WORKDIR /workspace
 COPY . .
 RUN corepack enable && pnpm install --frozen-lockfile
-RUN pnpm build:packages && pnpm --filter @platform/domain-service build
-RUN pnpm --filter @platform/domain-service deploy --prod /release
+RUN pnpm build:packages && pnpm --filter @applattice/domain-service build
+RUN pnpm --filter @applattice/domain-service deploy --prod /release
 
 FROM ${NODE_IMAGE} AS runtime
 WORKDIR /app

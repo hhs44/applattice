@@ -4,7 +4,7 @@ FROM ${NODE_IMAGE} AS build
 WORKDIR /workspace
 COPY . .
 RUN corepack enable && pnpm install --frozen-lockfile
-RUN pnpm build:packages && pnpm --filter @platform/portal build
+RUN pnpm build:packages && pnpm --filter @applattice/portal build
 
 FROM ${NGINX_IMAGE} AS runtime
 COPY deployment/nginx/default.conf /etc/nginx/conf.d/default.conf

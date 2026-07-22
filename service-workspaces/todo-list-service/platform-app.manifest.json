@@ -15,7 +15,7 @@
     "bridgeVersion": "1.0.0",
     "manifestPath": "/mf-manifest.json",
     "dockerfile": "frontend/Dockerfile",
-    "image": "intelligent-testing/todo-list-web:1.0.0"
+    "image": "applattice/todo-list-web:1.0.0"
   },
   "backend": {
     "runtime": "python",
