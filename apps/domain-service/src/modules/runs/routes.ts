@@ -1,4 +1,4 @@
-import { CreateTestRunRequestSchema } from '@platform/contracts';
+import { CreateTestRunRequestSchema } from '@applattice/contracts';
 import type { FastifyInstance } from 'fastify';
 import { DomainError } from '../../lib/errors.js';
 import type { RunRepository } from './repository.js';

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { Principal } from '@platform/contracts';
+import type { Principal } from '@applattice/contracts';
 import { createPlatformClient, hasPermission } from './index.js';
 
 const principal: Principal = {

@@ -16,7 +16,7 @@ async function request(path, init) {
 }
 
 const homepage = await request('/');
-if (!String(homepage.body).includes('智能测试平台')) throw new Error('门户首页内容不正确');
+if (!String(homepage.body).includes('AppLattice')) throw new Error('门户首页内容不正确');
 
 await request('/health/live');
 await request('/health/ready');

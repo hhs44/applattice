@@ -1,5 +1,5 @@
 {
-  "name": "@platform/portal",
+  "name": "@applattice/portal",
   "version": "0.1.0",
   "private": true,
   "license": "Apache-2.0",
@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "@module-federation/runtime": "2.7.0",
-    "@platform/contracts": "workspace:*",
-    "@platform/microfrontend-bridge": "workspace:*",
-    "@platform/sdk": "workspace:*",
-    "@platform/ui": "workspace:*",
+    "@applattice/contracts": "workspace:*",
+    "@applattice/microfrontend-bridge": "workspace:*",
+    "@applattice/sdk": "workspace:*",
+    "@applattice/ui": "workspace:*",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },

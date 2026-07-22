@@ -14,7 +14,7 @@
 ## 仓库所有者发布前完成
 
 - [ ] 确认许可证、版权主体、品牌和架构图片的公开授权；
-- [x] 选择 GitHub 组织和最终仓库名：`hhs44/intelligent-testing-platform-template`；
+- [x] 选择 GitHub 组织和最终仓库名：`hhs44/applattice`；
 - [x] 确定仓库地址后补充 `package.json` 的 `repository`、`homepage` 和 `bugs` 字段；
 - [x] 启用 GitHub 私密漏洞报告作为安全联系渠道；
 - [x] 启用 GitHub 安全功能和主分支规则集；

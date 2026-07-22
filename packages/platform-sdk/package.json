@@ -1,5 +1,5 @@
 {
-  "name": "@platform/sdk",
+  "name": "@applattice/sdk",
   "version": "0.1.0",
   "private": true,
   "license": "Apache-2.0",
@@ -21,6 +21,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@platform/contracts": "workspace:*"
+    "@applattice/contracts": "workspace:*"
   }
 }

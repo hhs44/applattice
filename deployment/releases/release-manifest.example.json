@@ -3,19 +3,19 @@
   "environment": "production",
   "platform": {
     "version": "1.0.0",
-    "portalImage": "registry.intra.example.com/testing/portal@sha256:0000000000000000000000000000000000000000000000000000000000000000",
-    "gatewayImage": "registry.intra.example.com/testing/gateway@sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    "portalImage": "registry.intra.example.com/applattice/portal@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "gatewayImage": "registry.intra.example.com/applattice/gateway@sha256:1111111111111111111111111111111111111111111111111111111111111111"
   },
   "services": [
     {
       "id": "domain-service",
       "contractVersion": "1.0.0",
-      "image": "registry.intra.example.com/testing/domain-service@sha256:2222222222222222222222222222222222222222222222222222222222222222"
+      "image": "registry.intra.example.com/applattice/domain-service@sha256:2222222222222222222222222222222222222222222222222222222222222222"
     },
     {
       "id": "todo-list-service",
       "contractVersion": "1.0.0",
-      "image": "registry.intra.example.com/testing/todo-list-service@sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      "image": "registry.intra.example.com/applattice/todo-list-service@sha256:3333333333333333333333333333333333333333333333333333333333333333"
     }
   ],
   "change": {

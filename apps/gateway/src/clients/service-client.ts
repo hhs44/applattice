@@ -1,4 +1,4 @@
-import type { Principal } from '@platform/contracts';
+import type { Principal } from '@applattice/contracts';
 import type { GatewayConfig, UpstreamConfig } from '../config.js';
 import { GatewayError } from '../lib/errors.js';
 

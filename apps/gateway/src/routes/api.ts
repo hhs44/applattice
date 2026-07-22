@@ -1,4 +1,4 @@
-import { CreateTestRunRequestSchema, type Permission } from '@platform/contracts';
+import { CreateTestRunRequestSchema, type Permission } from '@applattice/contracts';
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import type { Authenticator } from '../auth/authenticator.js';
 import type { DomainClient } from '../clients/domain-client.js';

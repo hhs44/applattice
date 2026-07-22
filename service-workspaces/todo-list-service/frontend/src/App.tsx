@@ -1,8 +1,8 @@
 import {
   PLATFORM_BRIDGE_VERSION,
   type PlatformAppProps,
-} from '@platform/microfrontend-bridge';
-import { Button, Card, EmptyState } from '@platform/ui';
+} from '@applattice/microfrontend-bridge';
+import { Button, Card, EmptyState } from '@applattice/ui';
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import type { Todo, TodoList } from './types.js';
 import './styles.css';

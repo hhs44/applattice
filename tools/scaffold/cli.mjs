@@ -148,10 +148,10 @@ async function promptPortal(args) {
   const rl = createInterface({ input: process.stdin, output: process.stdout });
   try {
     const id =
-      args[0] ?? ((await rl.question('门户 ID [testing-platform]: ')) || 'testing-platform');
+      args[0] ?? ((await rl.question('门户 ID [enterprise-platform]: ')) || 'enterprise-platform');
     const title =
       flagValue(args, '--title') ??
-      ((await rl.question('门户名称 [智能测试平台]: ')) || '智能测试平台');
+      ((await rl.question('门户名称 [企业应用平台]: ')) || '企业应用平台');
     const layout =
       flagValue(args, '--layout') ??
       ((await rl.question(`布局 ${layouts.join('|')} [enterprise-sidebar]: `)) ||
@@ -361,16 +361,16 @@ export async function scaffoldPortal(args) {
 async function packPlatformVendors(target) {
   command(
     'pnpm',
-    ['--filter', '@platform/microfrontend-bridge', '--filter', '@platform/ui', 'build'],
+    ['--filter', '@applattice/microfrontend-bridge', '--filter', '@applattice/ui', 'build'],
     root,
   );
   await mkdir(target, { recursive: true });
   command(
     'pnpm',
-    ['--filter', '@platform/microfrontend-bridge', 'pack', '--pack-destination', target],
+    ['--filter', '@applattice/microfrontend-bridge', 'pack', '--pack-destination', target],
     root,
   );
-  command('pnpm', ['--filter', '@platform/ui', 'pack', '--pack-destination', target], root);
+  command('pnpm', ['--filter', '@applattice/ui', 'pack', '--pack-destination', target], root);
   const artifacts = (await readdir(target)).filter((name) => name.endsWith('.tgz'));
   await writeJson(resolve(target, 'manifest.json'), {
     schemaVersion: 1,

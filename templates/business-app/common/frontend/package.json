@@ -12,8 +12,8 @@
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
-    "@platform/microfrontend-bridge": "file:../vendor/platform-microfrontend-bridge-1.0.0.tgz",
-    "@platform/ui": "file:../vendor/platform-ui-0.1.0.tgz",
+    "@applattice/microfrontend-bridge": "file:../vendor/applattice-microfrontend-bridge-1.0.0.tgz",
+    "@applattice/ui": "file:../vendor/applattice-ui-0.1.0.tgz",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },

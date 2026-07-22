@@ -1,5 +1,5 @@
-import type { PortalApp, Principal } from '@platform/contracts';
-import { createPlatformClient, hasPermission } from '@platform/sdk';
+import type { PortalApp, Principal } from '@applattice/contracts';
+import { createPlatformClient, hasPermission } from '@applattice/sdk';
 import { useEffect, useMemo, useState } from 'react';
 import { loadPortalConfig, type PortalConfig } from './core/portal-config.js';
 import { RemoteApp } from './core/RemoteApp.js';
@@ -117,7 +117,7 @@ export function App() {
   if (error) {
     return (
       <main className="boot-screen">
-        <div className="brand-mark">T</div>
+        <div className="brand-mark">A</div>
         <h1>无法进入统一门户</h1>
         <p>{error}</p>
       </main>
@@ -126,8 +126,8 @@ export function App() {
   if (!config || !principal) {
     return (
       <main className="boot-screen">
-        <div className="brand-mark">T</div>
-        <h1>智能测试平台</h1>
+        <div className="brand-mark">A</div>
+        <h1>AppLattice</h1>
         <p>正在建立安全会话并加载应用目录…</p>
       </main>
     );

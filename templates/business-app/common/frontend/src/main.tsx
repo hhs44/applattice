@@ -1,4 +1,4 @@
-import type { PlatformAppClient, PlatformAppRequest } from '@platform/microfrontend-bridge';
+import type { PlatformAppClient, PlatformAppRequest } from '@applattice/microfrontend-bridge';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import BusinessApp from './App.js';

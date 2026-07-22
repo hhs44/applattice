@@ -1,8 +1,8 @@
-name: intelligent-testing-platform
+name: applattice
 
 services:
   gateway:
-    image: ${GATEWAY_IMAGE:-intelligent-testing/gateway:0.1.0}
+    image: ${GATEWAY_IMAGE:-applattice/gateway:0.1.0}
     build:
       context: ..
       dockerfile: deployment/docker/Dockerfile.gateway
@@ -34,7 +34,7 @@ services:
     restart: unless-stopped
 
   portal:
-    image: ${PORTAL_IMAGE:-intelligent-testing/portal:0.1.0}
+    image: ${PORTAL_IMAGE:-applattice/portal:0.1.0}
     build:
       context: ..
       dockerfile: deployment/docker/Dockerfile.portal

@@ -27,7 +27,7 @@ importers:
 
   apps/domain-service:
     dependencies:
-      '@platform/contracts':
+      '@applattice/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
       fastify:
@@ -36,12 +36,12 @@ importers:
 
   apps/gateway:
     dependencies:
+      '@applattice/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       '@fastify/cors':
         specifier: ^11.3.0
         version: 11.3.0
-      '@platform/contracts':
-        specifier: workspace:*
-        version: link:../../packages/contracts
       fastify:
         specifier: ^5.10.0
         version: 5.10.0
@@ -51,21 +51,21 @@ importers:
 
   apps/portal:
     dependencies:
+      '@applattice/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@applattice/microfrontend-bridge':
+        specifier: workspace:*
+        version: link:../../packages/microfrontend-bridge
+      '@applattice/sdk':
+        specifier: workspace:*
+        version: link:../../packages/platform-sdk
+      '@applattice/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@module-federation/runtime':
         specifier: 2.7.0
         version: 2.7.0
-      '@platform/contracts':
-        specifier: workspace:*
-        version: link:../../packages/contracts
-      '@platform/microfrontend-bridge':
-        specifier: workspace:*
-        version: link:../../packages/microfrontend-bridge
-      '@platform/sdk':
-        specifier: workspace:*
-        version: link:../../packages/platform-sdk
-      '@platform/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       react:
         specifier: ^19.2.7
         version: 19.2.7
@@ -112,7 +112,7 @@ importers:
 
   packages/platform-sdk:
     dependencies:
-      '@platform/contracts':
+      '@applattice/contracts':
         specifier: workspace:*
         version: link:../contracts
 

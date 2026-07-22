@@ -1,7 +1,10 @@
 import { loadRemote, registerRemotes } from '@module-federation/runtime';
-import { PLATFORM_BRIDGE_VERSION, type PlatformRemoteModule } from '@platform/microfrontend-bridge';
-import type { PlatformClient } from '@platform/sdk';
-import type { PortalApp, Principal } from '@platform/contracts';
+import {
+  PLATFORM_BRIDGE_VERSION,
+  type PlatformRemoteModule,
+} from '@applattice/microfrontend-bridge';
+import type { PlatformClient } from '@applattice/sdk';
+import type { PortalApp, Principal } from '@applattice/contracts';
 import { Component, useEffect, useMemo, useState, type ErrorInfo, type ReactNode } from 'react';
 
 const registeredRemotes = new Set<string>();

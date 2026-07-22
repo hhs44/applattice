@@ -1,16 +1,16 @@
 {
-  "name": "intelligent-testing-platform-template",
+  "name": "applattice",
   "version": "0.1.0",
   "private": true,
   "license": "Apache-2.0",
-  "description": "面向企业内网的统一门户、BFF 与 Node/Python 独立服务混合仓库开发套件",
+  "description": "企业级可组合应用平台开发与交付套件，提供统一门户、Gateway、微前端、契约治理与双层脚手架",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hhs44/intelligent-testing-platform-template.git"
+    "url": "git+https://github.com/hhs44/applattice.git"
   },
-  "homepage": "https://github.com/hhs44/intelligent-testing-platform-template#readme",
+  "homepage": "https://github.com/hhs44/applattice#readme",
   "bugs": {
-    "url": "https://github.com/hhs44/intelligent-testing-platform-template/issues"
+    "url": "https://github.com/hhs44/applattice/issues"
   },
   "keywords": [
     "microfrontend",
@@ -18,6 +18,9 @@
     "fastapi",
     "fastify",
     "react",
+    "composable-architecture",
+    "internal-developer-platform",
+    "platform-engineering",
     "intranet-platform",
     "scaffolding"
   ],
@@ -28,8 +31,8 @@
   },
   "scripts": {
     "predev": "pnpm build:packages",
-    "dev": "pnpm --parallel --filter @platform/portal --filter @platform/gateway --filter @platform/domain-service dev",
-    "build:packages": "pnpm --filter @platform/contracts --filter @platform/microfrontend-bridge --filter @platform/ui --filter @platform/sdk build",
+    "dev": "pnpm --parallel --filter @applattice/portal --filter @applattice/gateway --filter @applattice/domain-service dev",
+    "build:packages": "pnpm --filter @applattice/contracts --filter @applattice/microfrontend-bridge --filter @applattice/ui --filter @applattice/sdk build",
     "build": "pnpm -r build",
     "pretypecheck": "pnpm build:packages",
     "typecheck": "pnpm -r typecheck",

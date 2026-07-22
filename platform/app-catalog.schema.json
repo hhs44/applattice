@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://testing.intra.example.com/schemas/app-catalog.schema.json",
-  "title": "Testing platform application catalog",
+  "$id": "https://applattice.example/schemas/app-catalog.schema.json",
+  "title": "AppLattice application catalog",
   "type": "object",
   "additionalProperties": false,
   "required": ["schemaVersion", "apps"],

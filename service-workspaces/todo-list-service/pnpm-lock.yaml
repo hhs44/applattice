@@ -10,12 +10,12 @@ importers:
 
   frontend:
     dependencies:
-      '@platform/microfrontend-bridge':
-        specifier: file:../vendor/platform-microfrontend-bridge-1.0.0.tgz
-        version: file:vendor/platform-microfrontend-bridge-1.0.0.tgz(react@19.2.7)
-      '@platform/ui':
-        specifier: file:../vendor/platform-ui-0.1.0.tgz
-        version: file:vendor/platform-ui-0.1.0.tgz(react@19.2.7)
+      '@applattice/microfrontend-bridge':
+        specifier: file:../vendor/applattice-microfrontend-bridge-1.0.0.tgz
+        version: file:vendor/applattice-microfrontend-bridge-1.0.0.tgz(react@19.2.7)
+      '@applattice/ui':
+        specifier: file:../vendor/applattice-ui-0.1.0.tgz
+        version: file:vendor/applattice-ui-0.1.0.tgz(react@19.2.7)
       react:
         specifier: ^19.2.7
         version: 19.2.7
@@ -46,6 +46,18 @@ importers:
         version: 4.1.10(vite@8.1.5)
 
 packages:
+
+  '@applattice/microfrontend-bridge@file:vendor/applattice-microfrontend-bridge-1.0.0.tgz':
+    resolution: {integrity: sha512-FjfllonFODl5KGFpvYzIXRUmXVvk8orocvu5ObBYWxksMFPvp11G56VBX0jfP1m28WKk3erveHCy7rcZDsAe2Q==, tarball: file:vendor/applattice-microfrontend-bridge-1.0.0.tgz}
+    version: 1.0.0
+    peerDependencies:
+      react: ^19.2.7
+
+  '@applattice/ui@file:vendor/applattice-ui-0.1.0.tgz':
+    resolution: {integrity: sha512-01gz3DgdLuEGq9+TAUCyV5ld1n4f0mYejIcB28+aJNZjcBPQylcXWWlg4YEyYG0cTeILLENyJ6tzg0SXZmU/mA==, tarball: file:vendor/applattice-ui-0.1.0.tgz}
+    version: 0.1.0
+    peerDependencies:
+      react: ^19.2.7
 
   '@emnapi/core@1.11.1':
     resolution: {integrity: sha512-RSvbQmHzdKzNsLYa/wHrbc3KN4sYLKAdPZxqiM2HATqv/SBk2/ENSHpvXGaLOMcsAyz0poEGqkmmKYG3OWiJEQ==}
@@ -100,18 +112,6 @@ packages:
 
   '@oxc-project/types@0.139.0':
     resolution: {integrity: sha512-r9gHphtCs+1M7J0pw6Sn/hh/Wpa/iQrOOkrNAlVLF/gHq+/CJmHIWKKUUhdWjcD6CIa8idarspCsASiXCXvFUw==}
-
-  '@platform/microfrontend-bridge@file:vendor/platform-microfrontend-bridge-1.0.0.tgz':
-    resolution: {integrity: sha512-gVoH8HcKXTFoI0nsZ2UvRywcdAyS9+JRYvDYdpWVaFQliDP1v/8VXU1pB9DA8UY+2ASY8GJLILx8TkGP8TUeoA==, tarball: file:vendor/platform-microfrontend-bridge-1.0.0.tgz}
-    version: 1.0.0
-    peerDependencies:
-      react: ^19.2.7
-
-  '@platform/ui@file:vendor/platform-ui-0.1.0.tgz':
-    resolution: {integrity: sha512-hNIif01n0g73d6ZFsU62IF8Le+8ghsSpcxn2VrLktI+/ESwD8o3O3xj/nkH6m7W54jSZwkm1O/PvZcl1t+iO+g==, tarball: file:vendor/platform-ui-0.1.0.tgz}
-    version: 0.1.0
-    peerDependencies:
-      react: ^19.2.7
 
   '@rolldown/binding-android-arm64@1.1.5':
     resolution: {integrity: sha512-lZg8fqIv2v7FF237bwMgzGZEJvGL79/s5knJ/i6FmsGF4XXlzccZ4jb+TrFIxtSSxFtIpdsgrPZeMk1I9AFcyQ==}
@@ -707,6 +707,14 @@ packages:
 
 snapshots:
 
+  '@applattice/microfrontend-bridge@file:vendor/applattice-microfrontend-bridge-1.0.0.tgz(react@19.2.7)':
+    dependencies:
+      react: 19.2.7
+
+  '@applattice/ui@file:vendor/applattice-ui-0.1.0.tgz(react@19.2.7)':
+    dependencies:
+      react: 19.2.7
+
   '@emnapi/core@1.11.1':
     dependencies:
       '@emnapi/wasi-threads': 1.2.2
@@ -781,14 +789,6 @@ snapshots:
     optional: true
 
   '@oxc-project/types@0.139.0': {}
-
-  '@platform/microfrontend-bridge@file:vendor/platform-microfrontend-bridge-1.0.0.tgz(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-
-  '@platform/ui@file:vendor/platform-ui-0.1.0.tgz(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
 
   '@rolldown/binding-android-arm64@1.1.5':
     optional: true

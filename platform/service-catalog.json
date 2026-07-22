@@ -5,9 +5,9 @@
     {
       "id": "domain-service",
       "title": "测试运行领域服务",
-      "owner": "testing-platform",
+      "owner": "platform-team",
       "runtime": "node",
-      "repository": "ssh://git.intra.example.com/testing/domain-service.git",
+      "repository": "ssh://git.intra.example.com/applattice/domain-service.git",
       "gateway": {
         "baseUrlEnv": "DOMAIN_SERVICE_URL",
         "developmentUrl": "http://localhost:4100",
@@ -23,7 +23,7 @@
       },
       "deployment": {
         "imageEnv": "DOMAIN_SERVICE_IMAGE",
-        "image": "intelligent-testing/domain-service:0.1.0",
+        "image": "applattice/domain-service:0.1.0",
         "containerPort": 4100,
         "environment": {
           "NODE_ENV": "production",
@@ -62,7 +62,7 @@
       },
       "deployment": {
         "imageEnv": "TODO_LIST_SERVICE_IMAGE",
-        "image": "registry.intra.example.com/testing/todo-list-service:1.0.0",
+        "image": "registry.intra.example.com/applattice/todo-list-service:1.0.0",
         "containerPort": 4200,
         "environment": {
           "SERVICE_PORT": "4200",

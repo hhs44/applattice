@@ -1,5 +1,5 @@
 {
-  "name": "@platform/gateway",
+  "name": "@applattice/gateway",
   "version": "0.1.0",
   "private": true,
   "license": "Apache-2.0",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@fastify/cors": "^11.3.0",
-    "@platform/contracts": "workspace:*",
+    "@applattice/contracts": "workspace:*",
     "fastify": "^5.10.0",
     "jose": "^6.2.3"
   }

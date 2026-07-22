@@ -1,5 +1,5 @@
-import { PLATFORM_BRIDGE_VERSION, type PlatformAppProps } from '@platform/microfrontend-bridge';
-import { Card } from '@platform/ui';
+import { PLATFORM_BRIDGE_VERSION, type PlatformAppProps } from '@applattice/microfrontend-bridge';
+import { Card } from '@applattice/ui';
 import './styles.css';
 
 export const bridgeVersion = PLATFORM_BRIDGE_VERSION;

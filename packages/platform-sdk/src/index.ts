@@ -8,7 +8,7 @@ import {
   type CreateTestRunRequest,
   type Permission,
   type Principal,
-} from '@platform/contracts';
+} from '@applattice/contracts';
 
 export class PlatformApiError extends Error {
   constructor(
