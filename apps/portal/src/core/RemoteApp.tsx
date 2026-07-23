@@ -39,7 +39,7 @@ async function loadRemoteModule(app: PortalApp): Promise<PlatformRemoteModule> {
   return module;
 }
 
-type RemoteErrorBoundaryProps = { children: ReactNode; resetKey: number };
+type RemoteErrorBoundaryProps = { children: ReactNode; resetKey: number; onRetry(): void };
 type RemoteErrorBoundaryState = { error?: Error };
 
 class RemoteErrorBoundary extends Component<RemoteErrorBoundaryProps, RemoteErrorBoundaryState> {
@@ -59,7 +59,13 @@ class RemoteErrorBoundary extends Component<RemoteErrorBoundaryProps, RemoteErro
 
   render() {
     if (this.state.error) {
-      return <div className="remote-error">业务前端渲染失败：{this.state.error.message}</div>;
+      return (
+        <section className="remote-error" role="alert">
+          <strong>业务前端渲染失败</strong>
+          <span>{this.state.error.message}</span>
+          <button onClick={this.props.onRetry}>重新加载</button>
+        </section>
+      );
     }
     return this.props.children;
   }
@@ -109,7 +115,7 @@ export function RemoteApp({
   if (!module) return <div className="loading-panel">正在加载 {app.title}…</div>;
   const RemoteComponent = module.default;
   return (
-    <RemoteErrorBoundary resetKey={attempt}>
+    <RemoteErrorBoundary onRetry={() => setAttempt((value) => value + 1)} resetKey={attempt}>
       <RemoteComponent
         basePath={app.route}
         client={appClient}

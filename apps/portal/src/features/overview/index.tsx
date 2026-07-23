@@ -1,4 +1,4 @@
-import { Badge, Card } from '@applattice/ui';
+import { Badge, Button, Card, InlineAlert } from '@applattice/ui';
 import { useEffect, useState } from 'react';
 import type { PortalDashboard, TestRun } from '@applattice/contracts';
 import type { FeatureProps, PortalFeature } from '../types.js';
@@ -11,34 +11,71 @@ function statusTone(status: TestRun['status']) {
   return { queued: 'neutral', running: 'info', passed: 'success', failed: 'danger' }[status];
 }
 
-function OverviewPage({ client, principal }: FeatureProps) {
+function OverviewPage({ client, controlPlaneMode, principal, remoteAppCount }: FeatureProps) {
   const [dashboard, setDashboard] = useState<PortalDashboard>();
   const [error, setError] = useState<string>();
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
+    let active = true;
+    setDashboard(undefined);
+    setError(undefined);
     void client
       .getDashboard()
-      .then(setDashboard)
-      .catch((reason: Error) => setError(reason.message));
-  }, [client]);
+      .then((loadedDashboard) => {
+        if (active) setDashboard(loadedDashboard);
+      })
+      .catch((reason: Error) => {
+        if (active) setError(reason.message);
+      });
+    return () => {
+      active = false;
+    };
+  }, [attempt, client]);
 
-  if (error) return <div className="error-panel">无法加载工作台：{error}</div>;
+  if (error)
+    return (
+      <div className="error-panel" role="alert">
+        <strong>无法加载工作台</strong>
+        <span>{error}</span>
+        <Button onClick={() => setAttempt((value) => value + 1)}>重试加载</Button>
+      </div>
+    );
   if (!dashboard) return <div className="loading-panel">正在汇总平台运行数据…</div>;
 
-  const maxValue = Math.max(...dashboard.trend.map((item) => item.passed + item.failed));
+  const maxValue = Math.max(1, ...dashboard.trend.map((item) => item.passed + item.failed));
+  const generatedAt = new Intl.DateTimeFormat('zh-CN', {
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }).format(new Date(dashboard.generatedAt));
   return (
     <div className="page-stack">
       <section className="hero">
         <div>
           <span className="eyebrow">统一质量工作台</span>
           <h1>早上好，{principal.name}</h1>
-          <p>跨域测试正在稳定运行。这里汇总执行、质量与缺陷的最新态势。</p>
+          <p>这里汇总执行、质量与缺陷数据，帮助你快速判断需要关注的工作。</p>
         </div>
         <div className="hero__signal">
           <span className="pulse" />
-          平台服务正常
+          数据更新于 {generatedAt}
         </div>
       </section>
+
+      {controlPlaneMode === 'mock' ? (
+        <InlineAlert title="当前为本地示例数据" tone="info">
+          指标和运行记录用于演示门户体验，不代表真实生产状态。
+        </InlineAlert>
+      ) : null}
+      {remoteAppCount === 0 ? (
+        <InlineAlert title="当前仅运行平台内核" tone="warning">
+          尚未加载业务应用。请在平台仓库执行 <code>pnpm local:dev -- --app &lt;应用ID&gt;</code>{' '}
+          启动完整联调链路。
+        </InlineAlert>
+      ) : null}
 
       <section className="metric-grid" aria-label="核心质量指标">
         <article className="metric metric--blue">
