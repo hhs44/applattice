@@ -1,0 +1,28 @@
+flowchart LR
+  User["平台管理员 / 应用开发者"] --> Portal["Portal<br/>控制面体验与远程应用隔离"]
+  Portal -->|"同源 /api"| Gateway["Gateway / BFF<br/>会话内省、RBAC、默认拒绝"]
+
+  Gateway -->|"/api/control/v1"| Control["Control Plane / IAM<br/>目录快照、身份、权限、审计"]
+  Gateway -->|"/api/apps/:appId/*"| Apps["自治业务应用<br/>独立仓库、数据与发布"]
+  Gateway -->|"会话内省"| Control
+
+  Control --> IAMDB[("PostgreSQL<br/>用户、组、角色、会话、审计")]
+  Control -->|"只读已验证快照"| Snapshot["运行时治理快照"]
+  IdP["企业 OIDC IdP"] -->|"Authorization Code + PKCE"| Control
+
+  Developer["本地 CLI"] -->|"生成声明与差异"| Git["平台 Git 仓库<br/>应用、版本、兼容、发布修订"]
+  Git --> CI["CI 治理门禁<br/>Schema、兼容、签名、SBOM、漏洞"]
+  CI -->|"发布验证快照"| Snapshot
+  CI --> Registry["npm / PyPI / OCI / 离线制品"]
+  Registry --> Apps
+
+  Portal -. "远程加载事件" .-> Observe["现有可观测与告警平台"]
+  Gateway -. "日志 / Trace / 关联 ID" .-> Observe
+  Control -. "审计 / 健康 / Webhook" .-> Observe
+
+  classDef platform fill:#eaf3ff,stroke:#1672e5,color:#153b63;
+  classDef authority fill:#eef9f4,stroke:#20a76d,color:#15553d;
+  classDef external fill:#f7f3ff,stroke:#7259d6,color:#443682;
+  class Portal,Gateway,Control,Snapshot platform;
+  class IAMDB,Git authority;
+  class IdP,Apps,CI,Registry,Observe external;

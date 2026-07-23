@@ -32,8 +32,13 @@ function ReadyPortal({
   }, []);
 
   const localFeatures = useMemo(
-    () => portalFeatures.filter((feature) => hasPermission(principal, feature.requiredPermission)),
-    [principal],
+    () =>
+      portalFeatures.filter(
+        (feature) =>
+          hasPermission(principal, feature.requiredPermission) &&
+          (!feature.requiresControlPlane || config.controlPlane.mode !== 'disabled'),
+      ),
+    [config.controlPlane.mode, principal],
   );
   const visibleRemoteApps = useMemo(
     () => remoteApps.filter((app) => hasPermission(principal, app.requiredPermission)),
@@ -44,7 +49,11 @@ function ReadyPortal({
   );
   const activeLocal = activeRemote
     ? undefined
-    : (localFeatures.find((feature) => feature.path === path) ?? localFeatures[0]);
+    : (localFeatures.find(
+        (feature) =>
+          feature.path === path ||
+          feature.pathPrefixes?.some((prefix) => path.startsWith(`${prefix}/`)),
+      ) ?? localFeatures[0]);
 
   function navigate(nextPath: string) {
     window.history.pushState({}, '', nextPath);
@@ -86,7 +95,13 @@ function ReadyPortal({
       {activeRemote ? (
         <RemoteApp app={activeRemote} client={client} navigate={navigate} principal={principal} />
       ) : ActiveLocalComponent ? (
-        <ActiveLocalComponent client={client} principal={principal} />
+        <ActiveLocalComponent
+          client={client}
+          controlPlaneMode={config.controlPlane.mode}
+          currentPath={path}
+          navigate={navigate}
+          principal={principal}
+        />
       ) : null}
     </PortalLayout>
   );

@@ -1,0 +1,46 @@
+flowchart LR
+  subgraph Local["应用仓库本地阶段"]
+    Create["创建<br/>scaffold"] --> Develop["开发<br/>doctor / dev"]
+    Develop --> ValidateLocal["本地验证<br/>validate"]
+  end
+
+  subgraph Version["不可变应用版本"]
+    Register["已注册<br/>registered"] --> Validating["验证中<br/>validating"]
+    Validating -->|"全部门禁通过"| Validated["已验证<br/>validated"]
+    Validating -->|"门禁失败"| Rejected["已拒绝<br/>rejected"]
+    Rejected -->|"修复后注册新版本"| Register
+    Validated --> Superseded["已替代<br/>superseded"]
+  end
+
+  subgraph Deployment["环境部署修订"]
+    Pending["等待部署<br/>pending"] --> Deploying["部署中<br/>deploying"]
+    Deploying --> Healthy["健康<br/>healthy"]
+    Deploying --> Failed["失败<br/>failed"]
+    Healthy --> Degraded["降级<br/>degraded"]
+    Degraded --> Failed
+    Failed --> Rollback["创建回滚修订<br/>rolled_back"]
+    Degraded --> Rollback
+    Rollback --> Previous["上一健康版本的新修订"]
+  end
+
+  subgraph Application["应用本体"]
+    Active["活动<br/>active"] --> Deprecated["下线窗口<br/>deprecated"]
+    Deprecated -->|"无活动部署"| Archived["已归档<br/>archived"]
+  end
+
+  ValidateLocal -->|"register 生成 Git 提案"| Register
+  Validated -->|"publish / upgrade 创建修订"| Pending
+  Healthy -. "新版本健康后" .-> Superseded
+  Active -. "允许发布" .-> Pending
+  Archived -. "禁止新发布" .-> Pending
+
+  classDef local fill:#f7f9fb,stroke:#7d8b99,color:#26394b;
+  classDef success fill:#eef9f4,stroke:#20a76d,color:#15553d;
+  classDef warning fill:#fff7ed,stroke:#e98a33,color:#7f4516;
+  classDef danger fill:#fff0f1,stroke:#df5b63,color:#7c2d34;
+  classDef info fill:#eaf3ff,stroke:#1672e5,color:#153b63;
+  class Create,Develop,ValidateLocal local;
+  class Validated,Healthy,Previous success;
+  class Validating,Pending,Deploying,Degraded,Deprecated warning;
+  class Rejected,Failed,Rollback danger;
+  class Register,Superseded,Active,Archived info;

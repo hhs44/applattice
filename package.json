@@ -55,6 +55,7 @@
     "contracts:lock": "node scripts/update-contract-lock.mjs",
     "contracts:update": "node scripts/update-service-contract.mjs",
     "release:verify": "node scripts/verify-release-manifest.mjs",
+    "design:v0.2:verify": "node scripts/verify-v02-design.mjs",
     "smoke": "node scripts/smoke-test.mjs",
     "smoke:todo": "node scripts/smoke-todo.mjs",
     "verify:runtime": "node scripts/verify-runtime.mjs",
