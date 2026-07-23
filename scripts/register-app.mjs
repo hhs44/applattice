@@ -41,6 +41,7 @@ export async function registerApp(sourceArg) {
 
   const backendManifestPath = resolve(source, manifest.backend.manifest);
   assert(await exists(backendManifestPath), `未找到后端清单：${backendManifestPath}`);
+  const backendSource = dirname(backendManifestPath);
   const backend = await readJson(backendManifestPath);
   assert(backend.schemaVersion === 1, '后端清单 schemaVersion 必须为 1');
   assert(backend.runtime === manifest.backend.runtime, '联合清单与后端 runtime 不一致');
@@ -121,8 +122,8 @@ export async function registerApp(sourceArg) {
         healthcheckCommand: backend.deployment.healthcheckCommand,
       },
       development: {
-        fallbackPath: `service-workspaces/${manifest.id}`,
-        dockerfile: `${dirname(manifest.backend.manifest).replaceAll('\\', '/')}/Dockerfile`,
+        fallbackPath: `service-workspaces/${manifest.id}/${dirname(manifest.backend.manifest).replaceAll('\\', '/')}`,
+        dockerfile: 'Dockerfile',
       },
     });
     serviceCatalog.services.sort((left, right) => left.id.localeCompare(right.id));
@@ -172,9 +173,9 @@ export async function registerApp(sourceArg) {
       dockerfile: manifest.frontend.dockerfile,
     };
     workspace.services[backend.id] = {
-      path: localPath,
+      path: relative(root, backendSource).replaceAll('\\', '/'),
       source: 'local',
-      dockerfile: `${dirname(manifest.backend.manifest).replaceAll('\\', '/')}/Dockerfile`,
+      dockerfile: 'Dockerfile',
     };
 
     await writeJson(resolve(root, 'platform/service-catalog.json'), serviceCatalog);

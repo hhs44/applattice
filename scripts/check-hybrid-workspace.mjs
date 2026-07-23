@@ -1,5 +1,12 @@
-import { resolve } from 'node:path';
-import { exists, loadCatalog, loadWorkspace, readJson, serviceSource } from './lib/catalog.mjs';
+import {
+  exists,
+  loadCatalog,
+  loadWorkspace,
+  readJson,
+  serviceManifestPath,
+  serviceManifestRequired,
+  serviceSource,
+} from './lib/catalog.mjs';
 
 const strict = process.argv.includes('--strict');
 const catalog = await loadCatalog();
@@ -11,7 +18,7 @@ for (const service of catalog.services) {
   const source = serviceSource(service, workspace);
   const sourceExists = await exists(source.path);
   let manifest = 'not-found';
-  const manifestPath = resolve(source.path, 'service.manifest.json');
+  const manifestPath = await serviceManifestPath(source.path);
   if (await exists(manifestPath)) {
     const value = await readJson(manifestPath);
     if (value.id !== service.id) {
@@ -23,7 +30,7 @@ for (const service of catalog.services) {
     } else {
       manifest = 'ok';
     }
-  } else if (strict || source.overridden) {
+  } else if (serviceManifestRequired(service, source, strict)) {
     hasError = true;
   }
   if (!sourceExists && (strict || source.overridden)) hasError = true;
