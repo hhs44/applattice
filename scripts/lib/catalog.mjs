@@ -216,6 +216,24 @@ export function serviceSource(service, workspace) {
   return { path, dockerfile, overridden: Boolean(override) };
 }
 
+export async function serviceManifestPath(sourcePath) {
+  const directManifest = resolve(sourcePath, 'service.manifest.json');
+  if (await exists(directManifest)) return directManifest;
+
+  const appManifestPath = resolve(sourcePath, 'platform-app.manifest.json');
+  if (!(await exists(appManifestPath))) return directManifest;
+  const appManifest = await readJson(appManifestPath);
+  if (typeof appManifest.backend?.manifest !== 'string' || !appManifest.backend.manifest) {
+    return directManifest;
+  }
+  return resolve(sourcePath, appManifest.backend.manifest);
+}
+
+export function serviceManifestRequired(service, source, strict) {
+  const compatibilitySample = !source.overridden && service.development.fallbackPath === '.';
+  return source.overridden || (strict && !compatibilitySample);
+}
+
 export function appSource(app, workspace) {
   const override = workspace.apps?.[app.id];
   const path = resolve(root, override?.path ?? app.development.fallbackPath);
