@@ -6,5 +6,8 @@
   "layout": "enterprise-sidebar",
   "defaultTheme": "light",
   "themes": ["light", "dark", "system"],
-  "primaryColor": "#1672e5"
+  "primaryColor": "#1672e5",
+  "controlPlane": {
+    "mode": "mock"
+  }
 }

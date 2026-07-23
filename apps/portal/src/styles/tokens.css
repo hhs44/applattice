@@ -6,6 +6,8 @@
   --color-success: #20a76d;
   --color-warning: #e98a33;
   --color-danger: #df5b63;
+  --color-info: #1672e5;
+  --color-violet: #7259d6;
   --radius-sm: 8px;
   --radius-md: 13px;
   --shadow-card: 0 16px 40px rgb(16 40 66 / 7%);
@@ -28,6 +30,12 @@ select {
 }
 button {
   cursor: pointer;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--brand-primary) 28%, transparent);
+  outline-offset: 2px;
 }
 .sr-only {
   position: absolute;

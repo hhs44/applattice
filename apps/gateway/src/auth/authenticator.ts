@@ -16,6 +16,8 @@ const defaultDevPermissions: Permission[] = [
   'runs:read',
   'runs:create',
   'assets:read',
+  'platform:admin',
+  'platform:audit',
   // <permission-registry>
 ];
 

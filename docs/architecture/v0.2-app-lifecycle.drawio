@@ -1,0 +1,49 @@
+<mxfile host="app.diagrams.net" modified="2026-07-23T08:30:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="app-lifecycle" name="AppLattice v0.2 应用生命周期">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="localLane" value="应用仓库本地阶段" style="swimlane;horizontal=0;startSize=36;rounded=1;html=1;fillColor=#F7F9FB;strokeColor=#A8B5C1;fontColor=#26394B;" vertex="1" parent="1"><mxGeometry x="30" y="40" width="540" height="190" as="geometry" /></mxCell>
+        <mxCell id="create" value="创建&#xa;scaffold" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7D8B99;" vertex="1" parent="localLane"><mxGeometry x="70" y="55" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="develop" value="开发&#xa;doctor / dev" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7D8B99;" vertex="1" parent="localLane"><mxGeometry x="230" y="55" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="localValidate" value="本地验证&#xa;validate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7D8B99;" vertex="1" parent="localLane"><mxGeometry x="390" y="55" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="versionLane" value="不可变应用版本" style="swimlane;horizontal=0;startSize=36;rounded=1;html=1;fillColor=#EAF3FF;strokeColor=#1672E5;fontColor=#153B63;" vertex="1" parent="1"><mxGeometry x="610" y="40" width="760" height="260" as="geometry" /></mxCell>
+        <mxCell id="registered" value="已注册&#xa;registered" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1672E5;" vertex="1" parent="versionLane"><mxGeometry x="55" y="60" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="validating" value="验证中&#xa;validating" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#E98A33;" vertex="1" parent="versionLane"><mxGeometry x="220" y="60" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="validated" value="已验证&#xa;validated" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEF9F4;strokeColor=#20A76D;" vertex="1" parent="versionLane"><mxGeometry x="385" y="35" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="rejected" value="已拒绝&#xa;rejected" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF0F1;strokeColor=#DF5B63;" vertex="1" parent="versionLane"><mxGeometry x="385" y="135" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="superseded" value="已替代&#xa;superseded" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1672E5;" vertex="1" parent="versionLane"><mxGeometry x="580" y="35" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="deployLane" value="环境部署修订" style="swimlane;horizontal=0;startSize=36;rounded=1;html=1;fillColor=#F7F3FF;strokeColor=#7259D6;fontColor=#443682;" vertex="1" parent="1"><mxGeometry x="610" y="340" width="980" height="260" as="geometry" /></mxCell>
+        <mxCell id="pending" value="等待部署&#xa;pending" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#E98A33;" vertex="1" parent="deployLane"><mxGeometry x="55" y="60" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="deploying" value="部署中&#xa;deploying" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#E98A33;" vertex="1" parent="deployLane"><mxGeometry x="210" y="60" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="healthy" value="健康&#xa;healthy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEF9F4;strokeColor=#20A76D;" vertex="1" parent="deployLane"><mxGeometry x="365" y="25" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="degraded" value="降级&#xa;degraded" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#E98A33;" vertex="1" parent="deployLane"><mxGeometry x="365" y="135" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="failed" value="失败&#xa;failed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF0F1;strokeColor=#DF5B63;" vertex="1" parent="deployLane"><mxGeometry x="530" y="135" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="rollback" value="创建回滚修订&#xa;rolled_back" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF0F1;strokeColor=#DF5B63;" vertex="1" parent="deployLane"><mxGeometry x="695" y="135" width="140" height="65" as="geometry" /></mxCell>
+        <mxCell id="previous" value="上一健康版本&#xa;的新修订" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEF9F4;strokeColor=#20A76D;" vertex="1" parent="deployLane"><mxGeometry x="695" y="25" width="140" height="65" as="geometry" /></mxCell>
+        <mxCell id="appLane" value="应用本体" style="swimlane;horizontal=0;startSize=36;rounded=1;html=1;fillColor=#EAF3FF;strokeColor=#1672E5;fontColor=#153B63;" vertex="1" parent="1"><mxGeometry x="30" y="340" width="540" height="190" as="geometry" /></mxCell>
+        <mxCell id="active" value="活动&#xa;active" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1672E5;" vertex="1" parent="appLane"><mxGeometry x="70" y="55" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="deprecated" value="下线窗口&#xa;deprecated" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#E98A33;" vertex="1" parent="appLane"><mxGeometry x="230" y="55" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="archived" value="已归档&#xa;archived" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1672E5;" vertex="1" parent="appLane"><mxGeometry x="390" y="55" width="120" height="65" as="geometry" /></mxCell>
+        <mxCell id="l1" edge="1" parent="localLane" source="create" target="develop" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="l2" edge="1" parent="localLane" source="develop" target="localValidate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="v1" edge="1" parent="versionLane" source="registered" target="validating" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="v2" value="通过" edge="1" parent="versionLane" source="validating" target="validated" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="v3" value="失败" edge="1" parent="versionLane" source="validating" target="rejected" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="v4" edge="1" parent="versionLane" source="validated" target="superseded" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="d1" edge="1" parent="deployLane" source="pending" target="deploying" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="d2" edge="1" parent="deployLane" source="deploying" target="healthy" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="d3" edge="1" parent="deployLane" source="deploying" target="failed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="d4" edge="1" parent="deployLane" source="healthy" target="degraded" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="d5" edge="1" parent="deployLane" source="degraded" target="failed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="d6" edge="1" parent="deployLane" source="failed" target="rollback" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="d7" edge="1" parent="deployLane" source="rollback" target="previous" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a1" edge="1" parent="appLane" source="active" target="deprecated" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a2" value="无活动部署" edge="1" parent="appLane" source="deprecated" target="archived" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="cross1" value="register" edge="1" parent="1" source="localValidate" target="registered" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="cross2" value="publish / upgrade" edge="1" parent="1" source="validated" target="pending" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
