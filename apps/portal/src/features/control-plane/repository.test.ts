@@ -30,6 +30,18 @@ describe('MockControlPlaneRepository', () => {
     expect(proposal.blockedReason).toContain('活动部署');
   });
 
+  it('uses commands that are available from the platform package scripts', async () => {
+    const steps = await new MockControlPlaneRepository().getDeveloperSteps('todo-list');
+    expect(steps.map((step) => step.command)).toEqual([
+      'pnpm scaffold app todo-list "Todo 清单" --owner todo-team --backend python --route /todo-list --output ..\\todo-list --register',
+      'pnpm verify:runtime',
+      'pnpm contracts:verify && pnpm hybrid:check -- --strict',
+      'pnpm register:app -- ..\\todo-list',
+      'pnpm local:dev -- --app todo-list',
+      'pnpm release:verify',
+    ]);
+  });
+
   it('models rollback as a new deployment revision', async () => {
     const snapshot = await new MockControlPlaneRepository().loadSnapshot('rollback-complete');
     const deployments = snapshot.applications.find((app) => app.id === 'todo-list')?.deployments;

@@ -15,6 +15,7 @@ export function PortalLayout({
   principal,
   items,
   activeId,
+  runtimeModeLabel,
   theme,
   onThemeChange,
   onNavigate,
@@ -24,6 +25,7 @@ export function PortalLayout({
   principal: Principal;
   items: PortalNavItem[];
   activeId: string;
+  runtimeModeLabel: string;
   theme: ThemeChoice;
   onThemeChange(theme: ThemeChoice): void;
   onNavigate(path: string): void;
@@ -43,9 +45,12 @@ export function PortalLayout({
           <span className="nav-section">工作空间</span>
           {items.map((item) => (
             <button
+              aria-current={item.id === activeId ? 'page' : undefined}
+              aria-label={`${item.title}：${item.description}`}
               key={item.id}
               className={item.id === activeId ? 'active' : ''}
               onClick={() => onNavigate(item.route)}
+              title={`${item.title}：${item.description}`}
             >
               <span className="nav-mark">{item.navMark}</span>
               <span>
@@ -67,7 +72,7 @@ export function PortalLayout({
         <header className="topbar">
           <div className="environment">
             <span />
-            {config.environment}
+            {config.environment} · {runtimeModeLabel}
           </div>
           <div className="topbar-actions">
             <label>

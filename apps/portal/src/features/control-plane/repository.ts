@@ -496,7 +496,7 @@ export class MockControlPlaneRepository implements ControlPlaneRepository {
         id: 'scaffold',
         title: '创建应用',
         description: '生成独立前端、后端、Manifest 与本地开发壳。',
-        command: `applattice scaffold app ${appId} "Todo 清单" --backend python`,
+        command: `pnpm scaffold app ${appId} "Todo 清单" --owner todo-team --backend python --route /${appId} --output ..\\${appId} --register`,
         output: [
           '已生成独立应用仓库',
           '已写入 platform-app.manifest.json',
@@ -507,7 +507,7 @@ export class MockControlPlaneRepository implements ControlPlaneRepository {
         id: 'doctor',
         title: '检查环境',
         description: '检查运行时、端口、依赖镜像、Git 工作区和离线制品。',
-        command: `applattice doctor --app ${appId} --json`,
+        command: 'pnpm verify:runtime',
         output: [
           'Node 22: ready',
           'pnpm 11: ready',
@@ -519,21 +519,25 @@ export class MockControlPlaneRepository implements ControlPlaneRepository {
         id: 'validate',
         title: '验证契约',
         description: '校验 Manifest、OpenAPI、兼容矩阵、SBOM 和制品摘要。',
-        command: `applattice validate ..\\${appId} --strict`,
+        command: 'pnpm contracts:verify && pnpm hybrid:check -- --strict',
         output: ['Manifest Schema v2: supported', 'OpenAPI 3.1.0: supported', '18 checks passed'],
       },
       {
         id: 'register',
-        title: '生成注册提案',
-        description: '把应用与版本声明写入本地平台 Git 工作区，等待评审。',
-        command: `applattice register ..\\${appId} --dry-run`,
-        output: ['将新增 2 个声明文件', '未提交 Git', '下一步: 查看差异并创建 PR/MR'],
+        title: '注册已有应用',
+        description: '把已有应用清单和版本声明写入本地平台 Git 工作区，等待评审。',
+        command: `pnpm register:app -- ..\\${appId}`,
+        output: [
+          '已更新 platform/app-catalog.json',
+          '已更新服务目录与契约锁',
+          '下一步: 查看差异并创建 PR/MR',
+        ],
       },
       {
         id: 'dev',
         title: '联合开发',
         description: '启动 Portal、Gateway 和目标应用，验证身份、权限和深链接。',
-        command: `applattice dev --app ${appId}`,
+        command: `pnpm local:dev -- --app ${appId}`,
         output: [
           'Portal: http://127.0.0.1:8080',
           'Gateway: http://127.0.0.1:4000',
@@ -542,10 +546,10 @@ export class MockControlPlaneRepository implements ControlPlaneRepository {
       },
       {
         id: 'publish',
-        title: '生成发布提案',
-        description: '以不可变摘要创建发布修订，生产变更仍需 Git 评审与 CI。',
-        command: `applattice publish ${appId}@1.4.0 --env production --change CHANGE-1852 --dry-run`,
-        output: ['signature: verified', 'SBOM: CycloneDX 1.7', 'release proposal: ready'],
+        title: '验证发布清单',
+        description: '验证不可变镜像、变更单和回滚清单，生产变更仍需 Git 评审与 CI。',
+        command: 'pnpm release:verify',
+        output: ['发布清单结构: verified', '镜像引用: immutable', '回滚清单: present'],
       },
     ];
   }

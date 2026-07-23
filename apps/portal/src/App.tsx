@@ -1,5 +1,6 @@
 import type { PortalApp, Principal } from '@applattice/contracts';
 import { createPlatformClient, hasPermission } from '@applattice/sdk';
+import { Button } from '@applattice/ui';
 import { useEffect, useMemo, useState } from 'react';
 import { loadPortalConfig, type PortalConfig } from './core/portal-config.js';
 import { RemoteApp } from './core/RemoteApp.js';
@@ -49,11 +50,11 @@ function ReadyPortal({
   );
   const activeLocal = activeRemote
     ? undefined
-    : (localFeatures.find(
+    : localFeatures.find(
         (feature) =>
           feature.path === path ||
           feature.pathPrefixes?.some((prefix) => path.startsWith(`${prefix}/`)),
-      ) ?? localFeatures[0]);
+      );
 
   function navigate(nextPath: string) {
     window.history.pushState({}, '', nextPath);
@@ -77,7 +78,7 @@ function ReadyPortal({
     })),
   ];
 
-  if (!activeRemote && !activeLocal) {
+  if (items.length === 0) {
     return <div className="boot-screen">当前用户没有可访问的门户功能</div>;
   }
 
@@ -90,6 +91,7 @@ function ReadyPortal({
       onNavigate={navigate}
       onThemeChange={setTheme}
       principal={principal}
+      runtimeModeLabel={visibleRemoteApps.length > 0 ? '完整联调模式' : '平台内核模式'}
       theme={theme}
     >
       {activeRemote ? (
@@ -101,8 +103,15 @@ function ReadyPortal({
           currentPath={path}
           navigate={navigate}
           principal={principal}
+          remoteAppCount={visibleRemoteApps.length}
         />
-      ) : null}
+      ) : (
+        <section className="error-panel" role="alert">
+          <strong>页面不存在</strong>
+          <span>当前地址没有对应的门户功能，可能是链接已失效或应用尚未加载。</span>
+          <Button onClick={() => navigate('/')}>返回总览</Button>
+        </section>
+      )}
     </PortalLayout>
   );
 }
@@ -112,9 +121,14 @@ export function App() {
   const [principal, setPrincipal] = useState<Principal>();
   const [remoteApps, setRemoteApps] = useState<PortalApp[]>([]);
   const [error, setError] = useState<string>();
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     const controller = new AbortController();
+    setConfig(undefined);
+    setPrincipal(undefined);
+    setRemoteApps([]);
+    setError(undefined);
     void Promise.all([loadPortalConfig(), client.getSession(), client.listApps()])
       .then(([loadedConfig, loadedPrincipal, apps]) => {
         if (controller.signal.aborted) return;
@@ -127,14 +141,15 @@ export function App() {
         if (!controller.signal.aborted) setError(reason.message);
       });
     return () => controller.abort();
-  }, []);
+  }, [attempt]);
 
   if (error) {
     return (
-      <main className="boot-screen">
+      <main className="boot-screen" role="alert">
         <div className="brand-mark">A</div>
         <h1>无法进入统一门户</h1>
         <p>{error}</p>
+        <Button onClick={() => setAttempt((value) => value + 1)}>重试加载</Button>
       </main>
     );
   }

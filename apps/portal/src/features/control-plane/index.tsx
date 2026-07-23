@@ -7,7 +7,7 @@ import type {
   DeploymentStatus,
   VersionStatus,
 } from '@applattice/contracts';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import type { FeatureProps, PortalFeature } from '../types.js';
 import {
   MockControlPlaneRepository,
@@ -115,6 +115,7 @@ function Overview({
 }) {
   const active = snapshot.applications.filter((app) => app.status === 'active').length;
   const unhealthy = snapshot.applications.filter((app) => app.health !== 'healthy');
+  const healthy = snapshot.applications.length - unhealthy.length;
   const blocked = snapshot.applications
     .flatMap((app) => app.versions[0]?.compatibility ?? [])
     .filter((item) => item.status === 'blocked');
@@ -128,7 +129,12 @@ function Overview({
           hint={`${active} 个处于活动状态`}
           tone="blue"
         />
-        <Metric label="健康部署" value="4 / 5" hint="1 个应用处于降级状态" tone="green" />
+        <Metric
+          label="健康应用"
+          value={`${healthy} / ${snapshot.applications.length}`}
+          hint={unhealthy.length > 0 ? `${unhealthy.length} 个应用需要关注` : '全部应用健康'}
+          tone="green"
+        />
         <Metric
           label="待处理兼容项"
           value={blocked.length}
@@ -200,8 +206,16 @@ function Overview({
 
       {unhealthy.length > 0 ? (
         <InlineAlert title="应用故障已被隔离" tone="warning">
-          {unhealthy.map((app) => app.title).join('、')} 当前不会影响 Portal
-          与其他应用，建议查看健康观测和关联 ID。
+          {unhealthy.map((app) => app.title).join('、')} 当前不会影响 Portal 与其他应用。{' '}
+          <Button
+            tone="ghost"
+            onClick={() => {
+              const [firstUnhealthy] = unhealthy;
+              if (firstUnhealthy) navigate(`/control/apps/${firstUnhealthy.id}`);
+            }}
+          >
+            查看首个故障应用
+          </Button>
         </InlineAlert>
       ) : null}
     </div>
@@ -502,26 +516,69 @@ function ApplicationDetail({
 function DeveloperJourney({
   steps,
   onProposal,
+  onSelectStep,
+  selectedStepId,
 }: {
   steps: DeveloperStep[];
   onProposal(action: GitOpsAction, appId: string): void;
+  onSelectStep(stepId: string): void;
+  selectedStepId: string;
 }) {
-  const [selected, setSelected] = useState(steps[0]?.id ?? 'scaffold');
   const [running, setRunning] = useState(false);
   const [copied, setCopied] = useState(false);
-  const active = steps.find((step) => step.id === selected) ?? steps[0];
+  const [copyError, setCopyError] = useState(false);
+  const copiedTimer = useRef<number | undefined>(undefined);
+  const runningTimer = useRef<number | undefined>(undefined);
+  const active = steps.find((step) => step.id === selectedStepId) ?? steps[0];
+
+  useEffect(
+    () => () => {
+      if (copiedTimer.current) window.clearTimeout(copiedTimer.current);
+      if (runningTimer.current) window.clearTimeout(runningTimer.current);
+    },
+    [],
+  );
+
   if (!active) return null;
   const currentStep = active;
 
   async function copyCommand() {
-    await navigator.clipboard.writeText(currentStep.command);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1400);
+    try {
+      await navigator.clipboard.writeText(currentStep.command);
+      setCopyError(false);
+      setCopied(true);
+      if (copiedTimer.current) window.clearTimeout(copiedTimer.current);
+      copiedTimer.current = window.setTimeout(() => setCopied(false), 1400);
+    } catch {
+      setCopied(false);
+      setCopyError(true);
+    }
   }
 
   function simulate() {
     setRunning(true);
-    window.setTimeout(() => setRunning(false), 650);
+    if (runningTimer.current) window.clearTimeout(runningTimer.current);
+    runningTimer.current = window.setTimeout(() => setRunning(false), 650);
+  }
+
+  function selectStep(index: number) {
+    const step = steps[index];
+    if (!step) return;
+    onSelectStep(step.id);
+    window.requestAnimationFrame(() =>
+      document.getElementById(`developer-step-${step.id}`)?.focus(),
+    );
+  }
+
+  function onStepKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
+    let nextIndex: number | undefined;
+    if (event.key === 'ArrowRight') nextIndex = (index + 1) % steps.length;
+    if (event.key === 'ArrowLeft') nextIndex = (index - 1 + steps.length) % steps.length;
+    if (event.key === 'Home') nextIndex = 0;
+    if (event.key === 'End') nextIndex = steps.length - 1;
+    if (nextIndex === undefined) return;
+    event.preventDefault();
+    selectStep(nextIndex);
   }
 
   return (
@@ -537,11 +594,15 @@ function DeveloperJourney({
         <div className="cp-stepper" role="tablist" aria-label="开发者路径">
           {steps.map((step, index) => (
             <button
+              aria-controls="developer-step-panel"
               aria-selected={step.id === active.id}
               className={step.id === active.id ? 'active' : ''}
+              id={`developer-step-${step.id}`}
               key={step.id}
-              onClick={() => setSelected(step.id)}
+              onClick={() => onSelectStep(step.id)}
+              onKeyDown={(event) => onStepKeyDown(event, index)}
               role="tab"
+              tabIndex={step.id === active.id ? 0 : -1}
             >
               <span>{String(index + 1).padStart(2, '0')}</span>
               <strong>{step.title}</strong>
@@ -550,7 +611,18 @@ function DeveloperJourney({
         </div>
       </Card>
 
-      <section className="cp-dev-grid">
+      {copyError ? (
+        <InlineAlert title="无法复制命令" tone="danger">
+          浏览器未授予剪贴板权限，请手动选择命令文本复制。
+        </InlineAlert>
+      ) : null}
+
+      <section
+        aria-labelledby={`developer-step-${active.id}`}
+        className="cp-dev-grid"
+        id="developer-step-panel"
+        role="tabpanel"
+      >
         <Card title={active.title}>
           <p className="cp-card-copy">{active.description}</p>
           <div className="cp-command">
@@ -965,12 +1037,15 @@ function ControlPlanePage({ currentPath, navigate, controlPlaneMode }: FeaturePr
   const [scenario, setScenario] = useState<DemoScenario>(currentScenario);
   const [snapshot, setSnapshot] = useState<ControlPlaneSnapshot>();
   const [steps, setSteps] = useState<DeveloperStep[]>([]);
+  const [developerStepId, setDeveloperStepId] = useState('scaffold');
   const [error, setError] = useState<string>();
+  const [reloadKey, setReloadKey] = useState(0);
   const [proposal, setProposal] = useState<GitOpsProposal>();
   const [notice, setNotice] = useState<string>();
   const [signInOpen, setSignInOpen] = useState(false);
 
   useEffect(() => {
+    let active = true;
     setSnapshot(undefined);
     setError(undefined);
     const params = new URLSearchParams(window.location.search);
@@ -978,11 +1053,17 @@ function ControlPlanePage({ currentPath, navigate, controlPlaneMode }: FeaturePr
     window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
     void Promise.all([repository.loadSnapshot(scenario), repository.getDeveloperSteps('todo-list')])
       .then(([loadedSnapshot, loadedSteps]) => {
+        if (!active) return;
         setSnapshot(loadedSnapshot);
         setSteps(loadedSteps);
       })
-      .catch((reason: Error) => setError(reason.message));
-  }, [scenario]);
+      .catch((reason: Error) => {
+        if (active) setError(reason.message);
+      });
+    return () => {
+      active = false;
+    };
+  }, [reloadKey, scenario]);
 
   async function openProposal(action: GitOpsAction, appId: string) {
     setProposal(await repository.previewProposal(action, appId));
@@ -1025,7 +1106,14 @@ function ControlPlanePage({ currentPath, navigate, controlPlaneMode }: FeaturePr
       <Applications snapshot={snapshot} navigate={navigateWithinControlPlane} />
     );
   if (snapshot && activeSection.id === 'developer')
-    content = <DeveloperJourney steps={steps} onProposal={openProposal} />;
+    content = (
+      <DeveloperJourney
+        onProposal={openProposal}
+        onSelectStep={setDeveloperStepId}
+        selectedStepId={developerStepId}
+        steps={steps}
+      />
+    );
   if (snapshot && activeSection.id === 'access')
     content = (
       <AccessControl
@@ -1079,7 +1167,8 @@ function ControlPlanePage({ currentPath, navigate, controlPlaneMode }: FeaturePr
 
       {controlPlaneMode === 'mock' ? (
         <InlineAlert title="当前为设计原型" tone="info">
-          数据由 Mock Repository 提供。所有发布、授权和登录操作都不会影响真实系统。
+          数据由 Mock Repository 提供。所有发布、授权和登录操作都不会影响真实系统
+          {snapshot ? `，快照时间 ${formatDate(snapshot.generatedAt)}` : ''}。
         </InlineAlert>
       ) : null}
       {notice ? (
@@ -1089,7 +1178,9 @@ function ControlPlanePage({ currentPath, navigate, controlPlaneMode }: FeaturePr
       ) : null}
       {error ? (
         <div className="error-panel" role="alert">
-          控制面暂时不可用：{error}
+          <strong>控制面暂时不可用</strong>
+          <span>{error}</span>
+          <Button onClick={() => setReloadKey((value) => value + 1)}>重试加载</Button>
         </div>
       ) : null}
       {!snapshot && !error ? <div className="loading-panel">正在构建控制面快照…</div> : content}

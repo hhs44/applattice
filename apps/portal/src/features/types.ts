@@ -8,6 +8,7 @@ export type FeatureProps = {
   principal: Principal;
   currentPath: string;
   controlPlaneMode: ControlPlaneMode;
+  remoteAppCount: number;
   navigate(path: string): void;
 };
 
